@@ -1,16 +1,38 @@
 import { createAction, props } from '@ngrx/store';
-import { CocktailApiResponse } from '../../interfaces/cocktail-api-response.interface';
+import { Cocktail, CocktailFilterAPIResponseItem } from '../../interfaces';
+import { CocktailFilter } from '../../interfaces/cocktail-filters-id.enum';
 
-export const getCocktailsByLetter = createAction(
-    '[Cocktails/API] getCocktailsByLetter',
-)
+export const init = createAction(
+    '[Cocktails/API] init',
+);
 
-export const getCocktailsByLetterSuccess = createAction(
-    '[Cocktails/API] getCocktailsByLetter',
-    props<{cocktailsApiResponse: CocktailApiResponse}>()
-)
+export const getCocktailsByLetterOrName = createAction(
+    '[Cocktails/API] getCocktailsByLetterOrName',
+    props<{text: string}>()
+);
 
-export const getCocktailsByLetterFailure = createAction(
-    '[Cocktails/API] getCocktailsByLetter',
+export const getCocktailsByLetterOrNameSuccess = createAction(
+    '[Cocktails/API] getCocktailsByLetterOrName',
+    props<{cocktailsByLetterOrName: Cocktail[]}>()
+);
+
+export const getCocktailsByLetterOrNameFailure = createAction(
+    '[Cocktails/API] getCocktailsByLetterOrName',
     props<{error: any}>()
-)
+);
+
+export const getCocktailsByFilter = createAction(
+    '[Cocktails/API] getCocktailsByLetter',
+    props<{filter: CocktailFilter}>()
+);
+
+export const getCocktailsByFilterSuccess = createAction(
+    '[Cocktails/API] getCocktailsByFilter Success',
+    props<{cocktailsByFilter: CocktailFilterAPIResponseItem[]}>()
+);
+
+export const getCocktailsByFilterFailure = createAction(
+    '[Cocktails/API] getCocktailsByFilter Failure',
+    props<{error: any}>()
+);
+ 

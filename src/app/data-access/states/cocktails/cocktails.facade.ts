@@ -1,0 +1,29 @@
+import { inject, Injectable } from '@angular/core'; 
+import { select, Store } from '@ngrx/store'; 
+import * as actions from './cocktails.actions';
+import * as selectors from './cocktails.selectors';
+import { Observable } from 'rxjs';
+import { Cocktail, CocktailFilter, CocktailFilterAPIResponseItem } from '../../interfaces';
+
+@Injectable() 
+export class CocktailsFacade {
+  private readonly store = inject(Store);
+
+  public cocktailsByLetterOrName$ = this.store.pipe(select(selectors.getCocktailsByLetterOrName));
+  public cocktailsByFilter$ = this.store.pipe(select(selectors.getCocktailsByFilter));
+  public loading$ = this.store.pipe(select(selectors.getLoading));
+  public loaded$ = this.store.pipe(select(selectors.getLoaded));
+  public error$ = this.store.pipe(select(selectors.getError));
+ 
+  init() {
+    this.store.dispatch(actions.init());  
+  }
+
+  getCocktailsByLetterOrName(text: string) {
+    this.store.dispatch(actions.getCocktailsByLetterOrName({text}));   
+  }
+
+  getCocktailsByFilter(filter: CocktailFilter) {
+    this.store.dispatch(actions.getCocktailsByFilter({filter}));   
+  }    
+}
