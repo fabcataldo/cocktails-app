@@ -7,7 +7,9 @@ import {
   CocktailApiResponse,
   CocktailFilter,
   CocktailFilterAPIResponse,
+  CocktailFilterAPIResponseItem,
   CocktailFiltersIdEnum,
+  CocktailsSearchType,
   GlassApiResponse,
   IngredientApiResponse
 } from '../interfaces';
@@ -22,10 +24,12 @@ import { processFilter } from '../mappers/filter-mapper';
 export class CocktailsService {
   private http = inject(HttpClient);
 
-  public getCocktailsByLetter(letter: string): Observable<Cocktail[]> {
+  public getCocktailsByLetterOrName(text: string): Observable<Cocktail[]> {
+    const url = this.buildCocktailsByLetterOrNameUrl(text);
+
     return this.http
       .get<CocktailApiResponse>(
-        `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${letter}`
+        url
       )
       .pipe(
         map((resp: CocktailApiResponse) => {
@@ -40,7 +44,7 @@ export class CocktailsService {
     );
   }
 
-  public getCocktailsByFilter(filter: CocktailFilter){
+  public getCocktailsByFilter(filter: CocktailFilter): Observable<CocktailFilterAPIResponseItem[]>{
     let url = '';
     switch(filter.id){
       case CocktailFiltersIdEnum.Glass: url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?g=${filter.name}`;
@@ -58,19 +62,6 @@ export class CocktailsService {
       )
       .pipe(
         map((resp: CocktailFilterAPIResponse) => {
-          return resp.drinks
-        }),
-        catchError(this.handleError)
-    );
-  }
-
-  public getCocktailsByName(name: string){
-    return this.http
-      .get<CocktailApiResponse>(
-         `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`
-      )
-      .pipe(
-        map((resp: CocktailApiResponse) => {
           return resp.drinks
         }),
         catchError(this.handleError)
@@ -143,18 +134,23 @@ export class CocktailsService {
     );
   }
 
-  public getCocktailDetail(id: number){
+  public getCocktailDetail(id: number): Observable<Cocktail>{
     return this.http
       .get<CocktailApiResponse>(
         `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
       )
       .pipe(
         map((resp: CocktailApiResponse) => {
-          const cocktail: Cocktail = processCocktail(resp.drinks![0]);
-          return cocktail;
+          return processCocktail(resp.drinks![0]);
         }),
         catchError(this.handleError)
     );
+  }
+  
+  private buildCocktailsByLetterOrNameUrl(text: string): string {
+    const BASE_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php';
+    const searchParam = text.length === 1 ? CocktailsSearchType.BY_FIRST_LETTER : CocktailsSearchType.BY_NAME;
+    return `${BASE_URL}?${searchParam}=${encodeURIComponent(text)}`;
   }
 
   private handleError(error: HttpErrorResponse) {
