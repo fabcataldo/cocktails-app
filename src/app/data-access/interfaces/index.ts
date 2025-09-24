@@ -7,3 +7,4 @@ export * from './alcoholic-api-response.interface';
 export * from './category-api-response.interface';
 export * from './ingredient-api-response.interface';
 export * from './glass-api-response.interface';
+export * from './cocktails-search-type.enum';
