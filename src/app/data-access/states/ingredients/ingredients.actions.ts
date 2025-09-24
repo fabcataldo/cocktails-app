@@ -1,16 +1,20 @@
 import { createAction, props } from '@ngrx/store';
-import { CocktailApiResponse } from '../../interfaces/cocktail-api-response.interface';
+import { filter } from '../../interfaces/filter.interface';
 
-export const getCocktailsByLetter = createAction(
-    '[Cocktails/API] getCocktailsByLetter',
+export const init = createAction(
+    '[Ingredients/API] init',
 )
 
-export const getCocktailsByLetterSuccess = createAction(
-    '[Cocktails/API] getCocktailsByLetter',
-    props<{cocktailsApiResponse: CocktailApiResponse}>()
+export const getIngredients = createAction(
+    '[Ingredients/API] getIngredients',
 )
 
-export const getCocktailsByLetterFailure = createAction(
-    '[Cocktails/API] getCocktailsByLetter',
-    props<{error: any}>()
+export const getIngredientsSuccess = createAction(
+    '[Ingredients/API] getIngredients Success',
+    props<{ IngredientsFilterItems: filter[] }>()
+)
+
+export const getIngredientsFailure = createAction(
+    '[Ingredients/API] getIngredients Failure',
+    props<{ error: any }>()
 )
