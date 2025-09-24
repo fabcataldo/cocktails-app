@@ -1,16 +1,24 @@
-import { createAction, props } from '@ngrx/store';
-import { CocktailApiResponse } from '../../interfaces/cocktail-api-response.interface';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { GlassesState } from './glasses.reducer';
 
-export const getCocktailsByLetter = createAction(
-    '[Cocktails/API] getCocktailsByLetter',
-)
+export const glassesState = createFeatureSelector<GlassesState>('Glasses');
 
-export const getCocktailsByLetterSuccess = createAction(
-    '[Cocktails/API] getCocktailsByLetter',
-    props<{cocktailsApiResponse: CocktailApiResponse}>()
-)
+export const getGlassesFilterItems = createSelector(
+  glassesState,
+  (state) => state.GlassesFilterItems
+);
 
-export const getCocktailsByLetterFailure = createAction(
-    '[Cocktails/API] getCocktailsByLetter',
-    props<{error: any}>()
-)
+export const getLoaded = createSelector(
+  glassesState,
+  (state) => state.loaded
+);
+
+export const getLoading = createSelector(
+  glassesState,
+  (state) => state.loading
+);
+
+export const getError = createSelector(
+  glassesState,
+  (state) => state.error
+);
