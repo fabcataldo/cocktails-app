@@ -1,4 +1,4 @@
-import { Cocktail, CocktailApiItem } from "../interfaces";
+import { Cocktail, CocktailAlcoholicEnum, CocktailApiItem } from "../interfaces";
 
 export function processCocktail(cocktail: CocktailApiItem): Cocktail {
 
@@ -27,7 +27,7 @@ export function processCocktail(cocktail: CocktailApiItem): Cocktail {
     id: cocktail.idDrink,
     name: cocktail.strDrink,
     category: cocktail.strCategory,
-    alcoholic: cocktail.strAlcoholic,
+    alcoholic: cocktail.strAlcoholic === CocktailAlcoholicEnum.Alcoholic,
     glass: cocktail.strGlass,
     instructions: {
       instructionsEN: cocktail.strInstructions,
