@@ -18,7 +18,7 @@ const initialState: CocktailState = {
     cocktailId: 0
 };
 
-export const CocktailReducer = createReducer(
+export const cocktailReducer = createReducer(
     initialState,
     on(actions.init, (state) => ({
         ...state,

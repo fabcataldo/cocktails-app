@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { IngredientsState } from './ingredients.reducer';
 
-export const ingredientsState = createFeatureSelector<IngredientsState>('Ingredients');
+export const ingredientsState = createFeatureSelector<IngredientsState>('ingredients');
 
 export const getIngredientsFilterItems = createSelector(
   ingredientsState,

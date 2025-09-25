@@ -12,12 +12,12 @@ export const getCocktailsByLetterOrName = createAction(
 );
 
 export const getCocktailsByLetterOrNameSuccess = createAction(
-    '[Cocktails/API] getCocktailsByLetterOrName',
+    '[Cocktails/API] getCocktailsByLetterOrName Success',
     props<{cocktailsByLetterOrName: Cocktail[]}>()
 );
 
 export const getCocktailsByLetterOrNameFailure = createAction(
-    '[Cocktails/API] getCocktailsByLetterOrName',
+    '[Cocktails/API] getCocktailsByLetterOrName Failure',
     props<{error: any}>()
 );
 

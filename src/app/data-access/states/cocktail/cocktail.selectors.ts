@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { CocktailState } from './cocktail.reducer';
 
 
-export const cocktailsState = createFeatureSelector<CocktailState>('Cocktail');
+export const cocktailsState = createFeatureSelector<CocktailState>('cocktail');
 
 export const getCocktail = createSelector(
   cocktailsState,

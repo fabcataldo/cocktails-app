@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { GlassesState } from './glasses.reducer';
 
-export const glassesState = createFeatureSelector<GlassesState>('Glasses');
+export const glassesState = createFeatureSelector<GlassesState>('glasses');
 
 export const getGlassesFilterItems = createSelector(
   glassesState,

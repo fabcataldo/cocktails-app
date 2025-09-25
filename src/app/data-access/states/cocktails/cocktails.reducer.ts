@@ -3,16 +3,16 @@ import * as actions from './cocktails.actions';
 import { Cocktail, CocktailFilterAPIResponseItem } from '../../interfaces';
 
 export interface CocktailsState {
-    cocktailsByLetterOrName: Cocktail[] | null;
-    cocktailsByFilter: CocktailFilterAPIResponseItem[] | null;
+    cocktailsByLetterOrName: Cocktail[];
+    cocktailsByFilter: CocktailFilterAPIResponseItem[];
     error: any;
     loading: boolean;
     loaded: boolean;
 }
 
 const initialState: CocktailsState = {
-    cocktailsByLetterOrName: null,
-    cocktailsByFilter: null,
+    cocktailsByLetterOrName: [],
+    cocktailsByFilter: [],
     error: null,
     loading: false,
     loaded: false
@@ -22,7 +22,8 @@ export const cocktailsReducer = createReducer(
     initialState,
     on(actions.init, (state) => ({
         ...state,
-        CocktailsFilterItems: null,
+        cocktailsByLetterOrName: [],
+        cocktailsByFilter: [],
         error: null,
         loading: false,
         loaded: false
@@ -31,7 +32,7 @@ export const cocktailsReducer = createReducer(
         ...state,
         loading: true,
         error: null,
-        cocktailsByLetterOrName: null,
+        cocktailsByLetterOrName: [],
         loaded: false
     })),
     on(actions.getCocktailsByLetterOrNameSuccess, (state, { cocktailsByLetterOrName }) => ({
@@ -46,13 +47,13 @@ export const cocktailsReducer = createReducer(
         loading: false,
         error,
         loaded: false,
-        cocktailsByLetter: null
+        cocktailsByLetterOrName: []
     })),
     on(actions.getCocktailsByFilter, (state) => ({
         ...state,
         loading: true,
         error: null,
-        cocktailsByFilter: null,
+        cocktailsByFilter: [],
         loaded: false
     })),
     on(actions.getCocktailsByFilterSuccess, (state, { cocktailsByFilter }) => ({
@@ -67,6 +68,6 @@ export const cocktailsReducer = createReducer(
         loading: false,
         error,
         loaded: false,
-        cocktailsByLetter: null
+        cocktailsByFilter: []
     })),
 );
