@@ -23,19 +23,23 @@ import { IngredientsFacade } from './data-access/states/ingredients/ingredients.
 import { CocktailsFacade } from './data-access/states/cocktails/cocktails.facade';
 import { CocktailEffects } from './data-access/states/cocktail/cocktail.effects';
 import { CocktailFacade } from './data-access/states/cocktail/cocktail.facade';
+import { provideHttpClient } from '@angular/common/http';
+import { cocktailReducer } from './data-access/states/cocktail/cocktail.reducer';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-
+    provideHttpClient(),
     provideStore({
-      alcoholicsFilterItems: alcoholicsReducer,
-      categoriesFilterItems: categoriesReducer,
-      glassesFilterItems: glassesReducer,
-      ingredientsFilterItems: ingredientsReducer,
-      cocktailsReducer: cocktailsReducer
+      alcoholics: alcoholicsReducer,
+      categories: categoriesReducer,
+      glasses: glassesReducer,
+      ingredients: ingredientsReducer,
+      cocktails: cocktailsReducer,
+      cocktail: cocktailReducer
     }),
     provideEffects([
       AlcoholicsEffects,
@@ -46,6 +50,7 @@ export const appConfig: ApplicationConfig = {
       CocktailEffects
     ]),
     (isDevMode() ? [provideStoreDevtools({ maxAge: 25 })] : []),
+    provideAnimations(),
 
     AlcoholicsFacade,
     CategoriesFacade,
