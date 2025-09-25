@@ -2,8 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store'; 
 import * as actions from './cocktails.actions';
 import * as selectors from './cocktails.selectors';
-import { Observable } from 'rxjs';
-import { Cocktail, CocktailFilter, CocktailFilterAPIResponseItem } from '../../interfaces';
+import { CocktailFilter } from '../../interfaces';
 
 @Injectable() 
 export class CocktailsFacade {
@@ -25,5 +24,9 @@ export class CocktailsFacade {
 
   getCocktailsByFilter(filter: CocktailFilter) {
     this.store.dispatch(actions.getCocktailsByFilter({filter}));   
-  }    
+  }
+
+  selectCocktailsCategory(category: string){
+    this.store.dispatch(actions.setSelectedCocktailsCategory({category}));   
+  }
 }

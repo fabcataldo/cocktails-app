@@ -4,10 +4,11 @@ import { Cocktail, CocktailFilterAPIResponseItem } from '../../interfaces';
 
 export interface CocktailsState {
     cocktailsByLetterOrName: Cocktail[];
-    cocktailsByFilter: CocktailFilterAPIResponseItem[];
+    cocktailsByFilter: Cocktail[];
     error: any;
     loading: boolean;
     loaded: boolean;
+    selectedCocktailsCategory: string | null;
 }
 
 const initialState: CocktailsState = {
@@ -15,7 +16,8 @@ const initialState: CocktailsState = {
     cocktailsByFilter: [],
     error: null,
     loading: false,
-    loaded: false
+    loaded: false,
+    selectedCocktailsCategory: null
 };
 
 export const cocktailsReducer = createReducer(
@@ -69,5 +71,9 @@ export const cocktailsReducer = createReducer(
         error,
         loaded: false,
         cocktailsByFilter: []
+    })),
+    on(actions.setSelectedCocktailsCategory, (state, { category }) => ({
+        ...state,
+        selectedCocktailsCategory: category,
     })),
 );

@@ -1,0 +1,24 @@
+<div class="card flex justify-content-center">
+    <p-carousel
+        [value]="cocktailsListPageFacade.cocktailsByFilter()!"
+        [numVisible]="3"
+        [numScroll]="1" 
+        [responsiveOptions]="responsiveOptions"
+    >
+        <ng-template let-cocktail #item>
+            <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4"
+                (click)="onCocktailClick(cocktail.id)">
+                <div class="mb-4">
+                    <div class="relative mx-auto">
+                        <img
+                            [src]="cocktail.thumbnail"
+                            [alt]="cocktail.name"
+                            class="w-4rem h-4rem border-round object-fit-cover"
+                        />
+                    </div>
+                </div>
+                <div class="mb-4 font-medium">{{ cocktail.name }}</div>
+            </div>
+        </ng-template>
+    </p-carousel>
+</div>

@@ -55,6 +55,6 @@
             <span>{{pageFacade.translatedInstructions()}}</span>
         </div>
 
-        <span>Category: {{pageFacade.cocktail()!.category}}</span>
+        <span (click)="showCategoryCocktailsModal()">Category: {{pageFacade.cocktail()!.category}}</span>
     </div>
 </div>

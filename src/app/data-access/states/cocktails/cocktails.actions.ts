@@ -28,11 +28,15 @@ export const getCocktailsByFilter = createAction(
 
 export const getCocktailsByFilterSuccess = createAction(
     '[Cocktails/API] getCocktailsByFilter Success',
-    props<{cocktailsByFilter: CocktailFilterAPIResponseItem[]}>()
+    props<{cocktailsByFilter: Cocktail[]}>()
 );
 
 export const getCocktailsByFilterFailure = createAction(
     '[Cocktails/API] getCocktailsByFilter Failure',
     props<{error: any}>()
 );
- 
+
+export const setSelectedCocktailsCategory = createAction(
+    '[Cocktails/Page] getSelectedCocktailsCategory',
+    props<{category: string}>()
+);

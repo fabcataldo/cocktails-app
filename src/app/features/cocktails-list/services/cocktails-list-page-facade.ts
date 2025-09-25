@@ -21,7 +21,8 @@ export class CocktailsListPageFacade implements OnDestroy {
   cocktailsByLetterOrName = signal<Cocktail[]>([]);
   loading = signal<boolean>(false);
   alcoholicNoAlcoholicCocktails = signal<{alcoholic: Cocktail[], nonAlcoholic: Cocktail[] }>({alcoholic: [], nonAlcoholic: []});
-  
+  cocktailsByFilter = signal<Cocktail[] | null>(null);
+
   filters = signal<any>([]);
   
   categoriesFilterItems = signal<filter[]>([]);
@@ -30,9 +31,18 @@ export class CocktailsListPageFacade implements OnDestroy {
   alcoholicsFilterItems = signal<filter[]>([]);
   error = signal<any>(null);
   loaded = signal<boolean>(false);
-  cocktailsByFilter: CocktailFilterAPIResponseItem[] | null = null;
+
   
   private subs = new Subscription();
+
+  public setCocktailsByFilterSuscription(){
+    this.subs.add(
+      this.cocktailsFacade.cocktailsByFilter$!.subscribe(data => {
+      if(data){
+        this.cocktailsByFilter.set(data);
+      }
+    }));
+  }
 
   init(){
     this.cocktailsFacade.init();
@@ -139,5 +149,9 @@ export class CocktailsListPageFacade implements OnDestroy {
           this.cocktailsFacade.getCocktailsByLetterOrName('a');
        }
     }   
+  }
+
+  selectCocktailsCategory(category: string){
+    this.cocktailsFacade.selectCocktailsCategory(category); 
   }
 }

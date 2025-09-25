@@ -14,7 +14,7 @@ import {
   IngredientApiResponse
 } from '../interfaces';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { processCocktail } from '../mappers';
+import { processCocktail, processCocktailByFilter } from '../mappers';
 import { filter } from '../interfaces/filter.interface';
 import { processFilter } from '../mappers/filter-mapper';
 
@@ -37,14 +37,14 @@ export class CocktailsService {
             ? resp.drinks.map(
               (drink) => processCocktail(drink)
             )
-            : []
+            : [];
           return cocktails;
         }),
         catchError(this.handleError)
     );
   }
 
-  public getCocktailsByFilter(filter: CocktailFilter): Observable<CocktailFilterAPIResponseItem[]>{
+  public getCocktailsByFilter(filter: CocktailFilter): Observable<Cocktail[]>{
     let url = '';
     switch(filter.id){
       case CocktailFiltersIdEnum.Glass: url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?g=${filter.name}`;
@@ -62,7 +62,12 @@ export class CocktailsService {
       )
       .pipe(
         map((resp: CocktailFilterAPIResponse) => {
-          return resp.drinks
+          const cocktails: Cocktail[] = resp.drinks
+            ? resp.drinks.map(
+              (drink) => processCocktailByFilter(drink)
+            )
+            : [];
+          return cocktails;
         }),
         catchError(this.handleError)
     );

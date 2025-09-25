@@ -1,4 +1,12 @@
-import { Cocktail, CocktailAlcoholicEnum, CocktailApiItem } from "../interfaces";
+import { Cocktail, CocktailAlcoholicEnum, CocktailApiItem, CocktailFilterAPIResponseItem } from "../interfaces";
+
+export function processCocktailByFilter(cocktail: CocktailFilterAPIResponseItem): Cocktail{
+  return {
+    id: cocktail.idDrink,
+    thumbnail: cocktail.strDrinkThumb,
+    name: cocktail.strDrink
+  }
+}
 
 export function processCocktail(cocktail: CocktailApiItem): Cocktail {
 

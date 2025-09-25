@@ -1,15 +1,15 @@
 export interface Cocktail {
   id: string;
   name: string;
-  category: string;
-  alcoholic: boolean;
-  glass: string;
-  instructions: Instructions;
-  thumbnail: string;
-  ingredients: string[];
-  measures: string[];
-  ingredientsWithMeasures: Array<IngredientWithMeasure>;
-  dateModified: string;
+  category?: string;
+  alcoholic?: boolean;
+  glass?: string;
+  instructions?: Instructions;
+  thumbnail?: string;
+  ingredients?: string[];
+  measures?: string[];
+  ingredientsWithMeasures?: Array<IngredientWithMeasure>;
+  dateModified?: string;
 }
 
 export interface Instructions {
