@@ -1,3 +1,18 @@
   <div class="container">
-    <router-outlet></router-outlet>
+    <div class="container p-3">
+      <div class="flex align-items-center">
+        <span class="mr-2">Dark Mode</span>
+        <p-toggleswitch
+          (model)="isDarkModeSetted()"
+          (onChange)="changeToDarkMode($event)"
+
+          i-moon
+        >
+          <ng-template #handle let-checked="isDarkModeSetted">
+            <i [class]="iconClass()"></i>
+          </ng-template>
+        </p-toggleswitch>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
   </div>
