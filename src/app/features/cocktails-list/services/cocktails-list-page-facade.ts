@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy, inject } from '@angular/core';
+import { Injectable, OnDestroy, inject, signal } from '@angular/core';
 import { Cocktail, CocktailFilter, CocktailFilterAPIResponseItem } from '../../../data-access/interfaces';
 import { CocktailsFacade } from '../../../data-access/states/cocktails/cocktails.facade';
 import { AlcoholicsFacade } from '../../../data-access/states/alcoholics/alcoholics.facade';
@@ -18,15 +18,19 @@ export class CocktailsListPageFacade implements OnDestroy {
   private categoriesFacade = inject(CategoriesFacade);
   private cocktailFacade = inject(CocktailFacade);
 
-  cocktailsByLetterOrName: Cocktail[] | null = null;
+  cocktailsByLetterOrName = signal<Cocktail[]>([]);
+  loading = signal<boolean>(false);
+  alcoholicNoAlcoholicCocktails = signal<{alcoholic: Cocktail[], nonAlcoholic: Cocktail[] }>({alcoholic: [], nonAlcoholic: []});
+  
+  filters = signal<any>([]);
+  
+  categoriesFilterItems = signal<filter[]>([]);
+  glassesFilterItems = signal<filter[]>([]);
+  ingredientsFilterItems = signal<filter[]>([]);
+  alcoholicsFilterItems = signal<filter[]>([]);
+  error = signal<any>(null);
+  loaded = signal<boolean>(false);
   cocktailsByFilter: CocktailFilterAPIResponseItem[] | null = null;
-  error: any = null
-  loading = false;
-  loaded = false;
-  categoriesFilterItems: filter[] | null = null;
-  glassesFilterItems: filter[] | null = null;
-  ingredientsFilterItems: filter[] | null = null;
-  alcoholicsFilterItems: filter[] | null = null;
   
   private subs = new Subscription();
 
@@ -38,16 +42,27 @@ export class CocktailsListPageFacade implements OnDestroy {
     this.alcoholicsFacade.init();
     this.cocktailFacade.init();
 
-    this.subs = this.cocktailsFacade.cocktailsByLetterOrName$!.subscribe(data => {
+    this.cocktailsFacade.getCocktailsByLetterOrName('a');
+    this.categoriesFacade.getCategoriesFilterItems();
+    this.ingredientsFacade.getIngredientsFilterItems();
+    this.glassesFacade.getGlassesFilterItems();
+    this.alcoholicsFacade.getAlcoholicsFilterItems();
+
+    this.subs.add (
+      this.cocktailsFacade.cocktailsByLetterOrName$!.subscribe(data => {
       if(data){
-        this.cocktailsByLetterOrName = data;
+        this.cocktailsByLetterOrName.set(data);
+        this.alcoholicNoAlcoholicCocktails.set({
+          alcoholic: this.cocktailsByLetterOrName()!.filter(c => c.alcoholic),
+          nonAlcoholic: this.cocktailsByLetterOrName()!.filter(c => !c.alcoholic)
+        })
       }
-    });
+    }));
 
     this.subs.add(
       this.categoriesFacade.categoriesFilterItems$.subscribe(data => {
         if(data){
-          this.categoriesFilterItems = data;
+          this.categoriesFilterItems.set(data);
         }
       })
     );
@@ -55,7 +70,7 @@ export class CocktailsListPageFacade implements OnDestroy {
     this.subs.add(
       this.glassesFacade.glassesFilterItems$.subscribe(data => {
         if(data){
-          this.glassesFilterItems = data;
+          this.glassesFilterItems.set(data);
         }
       })
     );
@@ -63,7 +78,7 @@ export class CocktailsListPageFacade implements OnDestroy {
     this.subs.add(
       this.ingredientsFacade.ingredientsFilterItems$.subscribe(data => {
         if(data){
-          this.ingredientsFilterItems = data;
+          this.ingredientsFilterItems.set(data);
         }
       })
     );
@@ -71,8 +86,26 @@ export class CocktailsListPageFacade implements OnDestroy {
     this.subs.add(
       this.alcoholicsFacade.alcoholicsFilterItems$.subscribe(data => {
         if(data){
-          this.alcoholicsFilterItems = data;
+          this.alcoholicsFilterItems.set(data);
         }
+      })
+    );
+
+    this.subs.add(
+      this.cocktailsFacade.loading$.subscribe(data => {
+        this.loading.set(data);
+      })
+    );
+
+    this.subs.add(
+      this.cocktailsFacade.loaded$.subscribe(data => {
+        this.loaded.set(data);
+      })
+    );
+
+    this.subs.add(
+      this.cocktailsFacade.error$.subscribe(data => {
+        this.error.set(data);
       })
     );
   }
@@ -91,5 +124,20 @@ export class CocktailsListPageFacade implements OnDestroy {
 
   getCocktailsByFilter(filter: CocktailFilter){
     this.cocktailsFacade.getCocktailsByFilter(filter);
+  }
+
+  searchByFilters(event: any){
+    console.log('event searchbyfilters')
+    console.log(event)
+
+    if(event.filters?.length){
+      //TODO: sólo implemento filtro de nombre, implementar el resto más adelante
+      this.filters.set(event.filters)
+       if(this.filters()[0].name.value > 3) {
+          this.cocktailsFacade.getCocktailsByLetterOrName(this.filters()[0].name.value);
+       } else {
+          this.cocktailsFacade.getCocktailsByLetterOrName('a');
+       }
+    }   
   }
 }
