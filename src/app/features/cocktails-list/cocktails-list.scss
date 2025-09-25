@@ -1,0 +1,40 @@
+:host ::ng-deep {
+  .p-datatable {
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    
+    .p-datatable-header {
+      background: var(--surface-50);
+      border-bottom: 1px solid var(--surface-200);
+    }
+
+    .p-datatable-thead > tr > th {
+      background: var(--surface-100);
+      color: var(--text-color);
+      font-weight: 600;
+      padding: 1rem;
+      border-bottom: 1px solid var(--surface-200);
+    }
+
+    .p-datatable-tbody > tr > td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--surface-200);
+    }
+
+    .p-datatable-tbody > tr:hover {
+      background: var(--surface-50);
+    }
+  }
+  
+  // Mejorar los tags
+  .p-tag {
+    border-radius: 16px;
+    font-weight: 500;
+  }
+  
+  // Mejorar filtros
+  .p-column-filter-menu {
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);
+  }
+}
