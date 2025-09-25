@@ -23,3 +23,8 @@ export const getError = createSelector(
   cocktailsState,
   (state) => state.error
 );
+
+export const getLanguage = createSelector(
+  cocktailsState,
+  (state) => state.language
+)

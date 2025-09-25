@@ -9,6 +9,7 @@
         [filters]="pageFacade.filters()"
         [rowHover]="true"
         (onLazyLoad)="pageFacade.searchByFilters($event)"
+        showGridlines
     >
         <ng-template #header>
             <tr>
@@ -25,78 +26,22 @@
                 <th style="width:22%">
                     <div class="flex items-center justify-between">
                         Name
-                        <p-columnFilter type="text" field="name" placeholder="Type to search" ariaLabel="Filter Name" filterOn="input"></p-columnFilter>
+                        <p-columnFilter type="text" field="name" ariaLabel="Filter Name"/>
                     </div>
                 </th>
                 <th style="width:22%">
                     <div class="flex items-center justify-between">
                         Category
-                        <p-columnFilter
-                            field="category"
-                            matchMode="in"
-                            display="menu"
-                            [showMatchModes]="false"
-                            [showOperator]="false"
-                            [showAddButton]="false"
-                        >
-                            <ng-template #filter let-value let-filter="filterCallback">
-                                <p-multiselect
-                                    (model)="value"
-                                    [options]="pageFacade.categoriesFilterItems() || []"
-                                    placeholder="Any"
-                                    (onChange)="filter($event.value)"
-                                    optionLabel="name"
-                                    optionValue="id"
-                                    [showHeader]="false"
-                                    class="w-full"
-                                    >
-                                    <ng-template let-option #item>
-                                        <div class="flex items-center gap-2">
-                                            <span>{{ option.name }}</span>
-                                        </div>
-                                    </ng-template>
-                                </p-multiselect>
-                            </ng-template>
-                        </p-columnFilter>
                     </div>
                 </th>
                 <th style="width:22%">
                     <div class="flex items-center justify-between">
                         Alcoholic
-                        <p-columnFilter type="boolean" field="alcoholic" display="menu" />
                     </div>
                 </th>
                 <th style="width:22%">
                     <div class="flex items-center justify-between">
                         Ingredients
-                        <p-columnFilter
-                            field="ingredients"
-                            matchMode="in"
-                            display="menu"
-                            [showMatchModes]="false"
-                            [showOperator]="false"
-                            [showAddButton]="false"
-                        >
-                            <ng-template #filter let-value let-filter="filterCallback">
-                                <p-multiselect
-                                    (model)="value"
-                                    [options]="pageFacade.ingredientsFilterItems() || []"
-                                    placeholder="Any"
-                                    (onChange)="filter($event.value)"
-                                    optionLabel="name"
-                                    optionValue="id"
-                                    [showHeader]="false"
-                                    style="min-width: 14rem"
-                                    [panelStyle]="{ minWidth: '16rem' }"
-                                    >
-                                    <ng-template let-option #item>
-                                        <div class="flex items-center gap-2">
-                                            <span>{{ option.name }}</span>
-                                        </div>
-                                    </ng-template>
-                                </p-multiselect>
-                            </ng-template>
-                        </p-columnFilter>
                     </div>
                 </th>
                 <th style="width:22%">
@@ -109,7 +54,7 @@
 
         <ng-template #body let-cocktail>
             <tr>
-                <td>{{ cocktail.id }}</td>
+                <td (click)="goToDetailPage(cocktail.id)">{{ cocktail.id }}</td>
                 <td>
                     <div class="flex items-center gap-2">
                         <img

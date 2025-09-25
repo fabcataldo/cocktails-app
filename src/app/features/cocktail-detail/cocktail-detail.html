@@ -1,1 +1,60 @@
-<p>cocktail-detail works!</p>
+<!-- TODO: <button></button> de back -->
+
+<div>
+    @for (language of availableLanguagues | keyvalue; track language.key) {
+        <button pButton 
+            (click)="onLanguagueChange(language.value)">
+            <!-- TODO: agregar icono de bandera correspondiente -->
+            <!-- <i class="pi pi-check" pButtonIcon></i> -->
+            <span pButtonLabel>{{language.value}}</span>
+        </button>
+    }
+</div>
+
+<div>
+    <div>
+        <img
+            [src]="pageFacade.cocktail()?.thumbnail"
+            [alt]="pageFacade.cocktail()?.name"
+            class="w-4rem h-4rem border-round object-fit-cover"
+        />
+        
+        <span class="font-medium text-900">{{ pageFacade.cocktail()?.name }}</span>
+
+        <div>
+            <p-table
+                [value]="pageFacade.cocktail()?.ingredientsWithMeasures ?? []"
+                [tableStyle]="{ 'min-width': '10rem' }"
+                showGridlines
+            >
+                <ng-template #header>
+                    <tr>
+                        <th style="width:22%">
+                            <div class="flex items-center justify-between">
+                                Ingredient
+                            </div>
+                        </th>
+                        <th style="width:22%">
+                            <div class="flex items-center justify-between">
+                                Measure
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-ingredient>
+                    <tr>
+                        <td>{{ ingredient.name }}</td>
+                        <td>{{ ingredient.measure }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <div>
+            <span>Instructions</span>
+            <span>{{pageFacade.translatedInstructions()}}</span>
+        </div>
+
+        <span>Category: {{pageFacade.cocktail()!.category}}</span>
+    </div>
+</div>

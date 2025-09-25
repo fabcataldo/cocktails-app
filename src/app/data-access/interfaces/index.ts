@@ -9,3 +9,4 @@ export * from './ingredient-api-response.interface';
 export * from './glass-api-response.interface';
 export * from './cocktails-search-type.enum';
 export * from './cocktail-alcoholic.enum';
+export * from './language.enum';

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Cocktail } from '../../interfaces';
+import { Cocktail, Language } from '../../interfaces';
 
 export const init = createAction(
     '[Cocktail/API] init',
@@ -21,6 +21,11 @@ export const getCocktailFailure = createAction(
 );
 
 export const setCocktailId  = createAction(
-    '[Cocktail/API] setCocktailId',
+    '[Cocktail/Page] setCocktailId',
     props<{id: number}>()
 );
+
+export const changeLanguage = createAction(
+    '[Cocktail/Page] change Language',
+    props<{language: string}>()
+)

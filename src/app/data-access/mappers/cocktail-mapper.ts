@@ -30,13 +30,13 @@ export function processCocktail(cocktail: CocktailApiItem): Cocktail {
     alcoholic: cocktail.strAlcoholic === CocktailAlcoholicEnum.Alcoholic,
     glass: cocktail.strGlass,
     instructions: {
-      instructionsEN: cocktail.strInstructions,
-      instructionsES: cocktail.strInstructionsES,
-      instructionsDE: cocktail.strInstructionsDE,
-      instructionsFR: cocktail.strInstructionsFR,
-      instructionsIT: cocktail.strInstructionsIT,
-      instructionsZH_HANS: cocktail.strInstructionsZH_HANS,
-      instructionsZH_HANT: cocktail.strInstructionsZH_HANT
+      EN: cocktail.strInstructions,
+      ES: cocktail.strInstructionsES,
+      DE: cocktail.strInstructionsDE,
+      FR: cocktail.strInstructionsFR,
+      IT: cocktail.strInstructionsIT,
+      ZH_HANS: cocktail.strInstructionsZH_HANS,
+      ZH_HANT: cocktail.strInstructionsZH_HANT
     },
     thumbnail: cocktail.strDrinkThumb,
     ingredients,

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as actions from './cocktail.actions';
-import { Cocktail } from '../../interfaces';
+import { Cocktail, Language } from '../../interfaces';
 
 export interface CocktailState {
     cocktail: Cocktail | null;
@@ -8,6 +8,7 @@ export interface CocktailState {
     error: any;
     loading: boolean;
     loaded: boolean;
+    language: string;
 }
 
 const initialState: CocktailState = {
@@ -15,7 +16,8 @@ const initialState: CocktailState = {
     error: null,
     loading: false,
     loaded: false,
-    cocktailId: 0
+    cocktailId: 0,
+    language: Language.ES
 };
 
 export const cocktailReducer = createReducer(
@@ -25,7 +27,8 @@ export const cocktailReducer = createReducer(
         CocktailFilterItems: null,
         error: null,
         loading: false,
-        loaded: false
+        loaded: false,
+        language: Language.ES
     })),
     on(actions.getCocktail, (state) => ({
         ...state,
@@ -51,5 +54,9 @@ export const cocktailReducer = createReducer(
     on(actions.setCocktailId, (state, { id }) => ({
         ...state,
         cocktailId: id
-    }))
+    })),
+    on(actions.changeLanguage, (state, { language }) => ({
+        ...state,
+        language: language
+    })),
 );

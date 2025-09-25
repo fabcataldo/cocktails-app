@@ -4,21 +4,25 @@ export interface Cocktail {
   category: string;
   alcoholic: boolean;
   glass: string;
-  instructions: {
-    instructionsEN: string;
-    instructionsES: string | null;
-    instructionsDE: string | null;
-    instructionsFR: string | null;
-    instructionsIT: string | null;
-    instructionsZH_HANS: string | null;
-    instructionsZH_HANT: string | null;
-  };
+  instructions: Instructions;
   thumbnail: string;
   ingredients: string[];
   measures: string[];
-  ingredientsWithMeasures: Array<{
-    name: string;
-    measure: string;
-  }>;
+  ingredientsWithMeasures: Array<IngredientWithMeasure>;
   dateModified: string;
+}
+
+export interface Instructions {
+  EN: string;
+  ES: string | null;
+  DE: string | null;
+  FR: string | null;
+  IT: string | null;
+  ZH_HANS: string | null;
+  ZH_HANT: string | null;  
+}
+
+interface IngredientWithMeasure {
+  name: string;
+  measure: string;
 }

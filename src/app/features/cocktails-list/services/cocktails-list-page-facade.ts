@@ -133,7 +133,7 @@ export class CocktailsListPageFacade implements OnDestroy {
     if(event.filters?.length){
       //TODO: sólo implemento filtro de nombre, implementar el resto más adelante
       this.filters.set(event.filters)
-       if(this.filters()[0].name.value > 3) {
+       if(this.filters()[0].name.value) {
           this.cocktailsFacade.getCocktailsByLetterOrName(this.filters()[0].name.value);
        } else {
           this.cocktailsFacade.getCocktailsByLetterOrName('a');

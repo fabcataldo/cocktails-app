@@ -4,6 +4,7 @@ import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { Cocktail } from '../../data-access/interfaces';
 import { TagModule } from 'primeng/tag';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cocktails-list',
@@ -14,6 +15,8 @@ import { TagModule } from 'primeng/tag';
 })
 export class CocktailsList implements OnInit {
   public readonly pageFacade = inject(CocktailsListPageFacade);
+  public router = inject(Router);
+
   public columns: any[] = [];
   public skeletonRows = Array(10).fill(null).map((_, index) => ({
       id: `skeleton-${index}`,
@@ -22,13 +25,13 @@ export class CocktailsList implements OnInit {
       alcoholic: false,
       glass: '',
       instructions: {
-        instructionsEN: '',
-        instructionsES: null,
-        instructionsDE: null,
-        instructionsFR: null,
-        instructionsIT: null,
-        instructionsZH_HANS: null,
-        instructionsZH_HANT: null,
+        EN: '',
+        ES: null,
+        DE: null,
+        FR: null,
+        IT: null,
+        ZH_HANS: null,
+        ZH_HANT: null,
       },
       thumbnail: '/assets/skeleton-image.png', // O una imagen placeholder
       ingredients: [],
@@ -93,5 +96,9 @@ export class CocktailsList implements OnInit {
         exportable: false,
       },
     ]
+  }
+
+  goToDetailPage(id: string){
+    this.router.navigate([`/detail`, id]);
   }
 }
