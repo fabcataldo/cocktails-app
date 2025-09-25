@@ -2,7 +2,7 @@ export interface Cocktail {
   id: string;
   name: string;
   category: string;
-  alcoholic: string;
+  alcoholic: boolean;
   glass: string;
   instructions: {
     instructionsEN: string;
