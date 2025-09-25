@@ -27,6 +27,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { cocktailReducer } from './data-access/states/cocktail/cocktail.reducer';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
