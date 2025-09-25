@@ -1,1 +1,46 @@
-/* You can add global styles to this file, and also import other style files */
+@use "tailwindcss";
+
+:root {
+  --background-color: #fff;
+  --text-color: #222;
+}
+
+body.dark-theme,
+div.dark-theme,
+h1.dark-theme,
+h2.dark-theme {
+  --text-color: #fff;
+  --background-color: #222;
+}
+
+body,
+div {
+  font-family: var(--font-family);
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+h1,
+h2,
+p {
+  color: var(--text-color);
+}
+
+body {
+  margin: 0px;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: var(--background-color);
+  font-weight: normal;
+  color: var(--body-text-color);
+  padding: 1rem;
+}
+
+.card {
+  background-color: var(--background-color);
+  border: var(--card-border);
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
