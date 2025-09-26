@@ -20,7 +20,6 @@ export class CocktailDetailPageFacade {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res) => {
-          console.log({res})
           this.cocktail.set(res);
           this.translatedInstructions.set(
             this.getInstruction(Language.ES)!
@@ -43,8 +42,6 @@ export class CocktailDetailPageFacade {
   }
 
   setCocktailId(id: number) {
-    console.log('set cocktail id')
-    console.log(id)
     this.cocktailFacade.setCocktailId(id);
   }
 
