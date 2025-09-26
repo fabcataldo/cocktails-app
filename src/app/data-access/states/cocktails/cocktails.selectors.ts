@@ -27,3 +27,8 @@ export const getError = createSelector(
   cocktailsState,
   (state) => state.error
 );
+
+export const getRandomCocktail = createSelector(
+  cocktailsState,
+  (state) => state.randomCocktail
+)

@@ -52,4 +52,26 @@ export class CocktailsEffects {
       )
     )
   );
+
+  getRandomCocktail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.getRandomCocktail),
+      mergeMap(() =>
+        this.cocktailsService.getRandomCocktail().pipe(
+          map((response) =>
+            actions.getRandomCocktailSuccess({
+              cocktail: response
+            })
+          ),
+          catchError((error) =>
+            of(
+              actions.getRandomCocktailFailure({
+                error: error
+              })
+            )
+          )
+        )
+      )
+    )
+  );
 }

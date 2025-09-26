@@ -9,6 +9,7 @@ export interface CocktailsState {
     loading: boolean;
     loaded: boolean;
     selectedCocktailsCategory: string | null;
+    randomCocktail: Cocktail | null;
 }
 
 const initialState: CocktailsState = {
@@ -17,7 +18,8 @@ const initialState: CocktailsState = {
     error: null,
     loading: false,
     loaded: false,
-    selectedCocktailsCategory: null
+    selectedCocktailsCategory: null,
+    randomCocktail: null
 };
 
 export const cocktailsReducer = createReducer(
@@ -28,7 +30,8 @@ export const cocktailsReducer = createReducer(
         cocktailsByFilter: [],
         error: null,
         loading: false,
-        loaded: false
+        loaded: false,
+        randomCocktail: null
     })),
     on(actions.getCocktailsByLetterOrName, (state) => ({
         ...state,
@@ -75,5 +78,18 @@ export const cocktailsReducer = createReducer(
     on(actions.setSelectedCocktailsCategory, (state, { category }) => ({
         ...state,
         selectedCocktailsCategory: category,
+    })),
+    on(actions.getRandomCocktail, (state) => ({
+        ...state,
+        randomCocktail: null
+    })),
+    on(actions.getRandomCocktailSuccess, (state, { cocktail }) => ({
+        ...state,
+        randomCocktail: cocktail
+    })),
+    on(actions.getRandomCocktailFailure, (state, { error }) => ({
+        ...state,
+        error,
+        randomCocktail: null
     })),
 );

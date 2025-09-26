@@ -1,20 +1,39 @@
-import { Component, computed, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { Component, effect, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { CocktailsListPageFacade } from './features/cocktails-list/services/cocktails-list-page-facade';
+import { toObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ToggleSwitchModule],
+  imports: [
+    RouterOutlet,
+    ButtonModule,
+  ],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
+  providers: [
+    CocktailsListPageFacade
+  ]
 })
 export class App {
-  isDarkModeSetted = signal<boolean>(false);
-  iconClass = computed(() => 
-    `!text-xs pi ${this.isDarkModeSetted() ? 'pi-moon' : ''}`
-  );
+  private readonly cocktailsListPageFacade = inject(CocktailsListPageFacade);
+  public router = inject(Router);
 
-  changeToDarkMode(event: any) {
-    document.body.classList.toggle('dark-theme');
+  constructor() {
+    this.cocktailsListPageFacade.setRandomCocktailSuscription();
+
+    effect(() => {
+      const cocktail = this.cocktailsListPageFacade.randomCocktail();
+      if (cocktail) {
+        this.router.navigate(['/detail', cocktail.id]);
+        this.cocktailsListPageFacade.randomCocktail.set(null);
+      }
+    });
+  }
+
+  goToRandomCocktailPage(){
+    this.cocktailsListPageFacade.getRandomCocktail();
   }
 }

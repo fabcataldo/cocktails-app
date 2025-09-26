@@ -40,3 +40,17 @@ export const setSelectedCocktailsCategory = createAction(
     '[Cocktails/Page] getSelectedCocktailsCategory',
     props<{category: string}>()
 );
+
+export const getRandomCocktail = createAction(
+    '[Cocktails/API] getRandomCocktail',
+);
+
+export const getRandomCocktailSuccess = createAction(
+    '[Cocktails/API] getRandomCocktail Success',
+    props<{cocktail: Cocktail}>()
+);
+
+export const getRandomCocktailFailure = createAction(
+    '[Cocktails/API] getRandomCocktail Failure',
+    props<{error: any}>()
+);

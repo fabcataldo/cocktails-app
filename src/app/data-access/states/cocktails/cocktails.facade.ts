@@ -13,6 +13,7 @@ export class CocktailsFacade {
   public loading$ = this.store.pipe(select(selectors.getLoading));
   public loaded$ = this.store.pipe(select(selectors.getLoaded));
   public error$ = this.store.pipe(select(selectors.getError));
+  public randomCocktail$ = this.store.pipe(select(selectors.getRandomCocktail));
  
   init() {
     this.store.dispatch(actions.init());  
@@ -28,5 +29,9 @@ export class CocktailsFacade {
 
   selectCocktailsCategory(category: string){
     this.store.dispatch(actions.setSelectedCocktailsCategory({category}));   
+  }
+
+  getRandomCocktail() {
+    this.store.dispatch(actions.getRandomCocktail());
   }
 }
