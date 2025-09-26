@@ -4,17 +4,21 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CocktailDetailPageFacade } from './services/cocktail-detail-page-facade';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-import { Language } from '../../data-access/interfaces';
 import {CommonModule} from "@angular/common";
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CategoryCocktailsModal } from '../category-cocktails-modal/category-cocktails-modal';
 import { CocktailsListPageFacade } from '../cocktails-list/services/cocktails-list-page-facade';
-import { setSelectedCocktailsCategory } from '../../data-access/states/cocktails/cocktails.actions';
-import { CocktailFilter, CocktailFiltersIdEnum } from '../../data-access/interfaces/cocktail-filters-id.enum';
+import { CocktailFiltersIdEnum } from '../../data-access/interfaces/cocktail-filters-id.enum';
+import { CocktailInstructionsLanguage } from './cocktail-instructions-language/cocktail-instructions-language';
 
 @Component({
   selector: 'app-cocktail-detail',
-  imports: [TableModule, ButtonModule, CommonModule],
+  imports: [
+    TableModule,
+    ButtonModule,
+    CommonModule,
+    CocktailInstructionsLanguage
+  ],
   templateUrl: './cocktail-detail.html',
   styleUrl: './cocktail-detail.scss',
   providers: [
@@ -33,8 +37,6 @@ export class CocktailDetail implements OnInit {
   private readonly destroyRef = takeUntilDestroyed();
   public languague = model(false);
   private ref?: DynamicDialogRef;
-
-  public availableLanguagues = Language;
 
   ngOnInit(): void {   
     this.pageFacade.init();
