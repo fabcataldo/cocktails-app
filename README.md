@@ -34,19 +34,19 @@ cd cocktails-app
 
 ### 3 **Ejecución**
 
-Primero instalar Node.js usando la URL especificada más arriba, luego:
-Comprobar que esté instalado Node.js corriendo el comando:
+Habiendo instalado ya Node.js comprobar que esté instalado, ejecutando el comando:
 
 ```sh
 node -v,
 ```
 
-Después:
-Correr el comando nvm use 22.16.0 asi instala la versión de Node.js, y automáticamente se setea dicha versión por defecto
+Después ejecutar el comando
+```sh
+nvm use 22.16.0
+```
+asi instala la versión de Node.js, y automáticamente se setea dicha versión por defecto
 
-Luego, instalar Docker y Docker Compose, siguiendo las instrucciones de los links que están al principio del documento.
-
-Por último, "levantar" el entorno de Docker, y luego ejecutar por terminal:
+Luego, habiendo instalado también Docker y Docker Compose, "levantar" el entorno de Docker, ejecutando por terminal:
 
 ```sh
 docker-compose up --build
