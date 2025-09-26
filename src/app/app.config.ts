@@ -25,7 +25,9 @@ import { CocktailEffects } from './data-access/states/cocktail/cocktail.effects'
 import { CocktailFacade } from './data-access/states/cocktail/cocktail.facade';
 import { provideHttpClient } from '@angular/common/http';
 import { cocktailReducer } from './data-access/states/cocktail/cocktail.reducer';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
 
 
 export const appConfig: ApplicationConfig = {
@@ -51,7 +53,12 @@ export const appConfig: ApplicationConfig = {
       CocktailEffects
     ]),
     (isDevMode() ? [provideStoreDevtools({ maxAge: 25 })] : []),
-    provideAnimations(),
+    provideAnimationsAsync(),
+    providePrimeNG({
+        theme: {
+            preset: Aura
+        }
+    }),
 
     AlcoholicsFacade,
     CategoriesFacade,
