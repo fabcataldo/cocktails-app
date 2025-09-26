@@ -1,116 +1,142 @@
-
-<div class="card">
-    <p-table
-        #cocktailsTable
-        [value]="pageFacade.loaded() ? pageFacade.cocktailsByLetterOrName()! : skeletonRows"
-        [tableStyle]="{ 'min-width': '60rem' }"
-        [loading]="pageFacade.loading()"
-        [lazy]="true"
-        [filters]="pageFacade.filters()"
-        [rowHover]="true"
-        (onLazyLoad)="pageFacade.searchByFilters($event)"
-        showGridlines
-    >
-        <ng-template #header>
-            <tr>
-                <th style="width:22%">
-                    <div class="flex items-center justify-between">
-                        ID
-                    </div>
-                </th>
-                <th style="width:22%">
-                    <div class="flex items-center justify-between">
-                        Image
-                    </div>
-                </th>
-                <th style="width:22%">
-                    <div class="flex items-center justify-between">
-                        Name
-                        <p-columnFilter type="text" field="name" ariaLabel="Filter Name"/>
-                    </div>
-                </th>
-                <th style="width:22%">
-                    <div class="flex items-center justify-between">
-                        Category
-                    </div>
-                </th>
-                <th style="width:22%">
-                    <div class="flex items-center justify-between">
-                        Alcoholic
-                    </div>
-                </th>
-                <th style="width:22%">
-                    <div class="flex items-center justify-between">
-                        Ingredients
-                    </div>
-                </th>
-                <th style="width:22%">
-                    <div class="flex items-center justify-between">
-                        Last Update
-                    </div>
-                </th>
-            </tr>
-        </ng-template>
-
-        <ng-template #body let-cocktail>
-            <tr>
-                <td (click)="goToDetailPage(cocktail.id)">{{ cocktail.id }}</td>
-                <td>
+<p-table #cocktailsTable [value]="pageFacade.loaded() ? pageFacade.cocktailsByLetterOrName()! : skeletonRows"
+    [tableStyle]="{ 'min-width': '60rem' }" [loading]="pageFacade.loading()" [lazy]="true"
+    [filters]="pageFacade.filters()" [rowHover]="true" (onLazyLoad)="pageFacade.searchByFilters($event)" showGridlines>
+    <ng-template #header>
+        <tr class="border-b border-gray-200 dark:border-gray-700">
+            <th class="text-left py-4 px-6 font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700">
+                <div class="flex items-center gap-2">
+                    <i class="pi pi-hashtag text-gray-500"></i>
+                    ID
+                </div>
+            </th>
+            <th class="text-left py-4 px-6 font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700">
+                <div class="flex items-center gap-2">
+                    <i class="pi pi-image text-gray-500"></i>
+                    Image
+                </div>
+            </th>
+            <th class="text-left py-4 px-6 font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700">
+                <div class="flex items-center justify-between gap-2">
                     <div class="flex items-center gap-2">
-                        <img
-                            [src]="cocktail.thumbnail"
-                            [alt]="cocktail.name"
-                            class="w-4rem h-4rem border-round object-fit-cover"
-                        />
+                        <i class="pi pi-glass text-gray-500"></i>
+                        Name
                     </div>
+                    <p-columnFilter type="text" field="name" ariaLabel="Filter Name" styleClass="ml-2" />
+                </div>
+            </th>
+            <th class="text-left py-4 px-6 font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700">
+                <div class="flex items-center gap-2">
+                    <i class="pi pi-tags text-gray-500"></i>
+                    Category
+                </div>
+            </th>
+            <th class="text-center py-4 px-6 font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700">
+                <div class="flex items-center justify-center gap-2">
+                    <i class="pi pi-check-circle text-gray-500"></i>
+                    Alcoholic
+                </div>
+            </th>
+            <th class="text-left py-4 px-6 font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700">
+                <div class="flex items-center gap-2">
+                    <i class="pi pi-list text-gray-500"></i>
+                    Ingredients
+                </div>
+            </th>
+            <th class="text-left py-4 px-6 font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700">
+                <div class="flex items-center gap-2">
+                    <i class="pi pi-calendar text-gray-500"></i>
+                    Last Update
+                </div>
+            </th>
+        </tr>
+    </ng-template>
 
-                </td>
-                <td>
-                    <span class="font-medium text-900">{{ cocktail.name }}</span>
-                </td>
-                <td>
-                    <p-tag 
-                        [value]="cocktail.category" 
-                        severity="info"
-                        class="text-sm">
-                    </p-tag>
-                </td>
-                <td class="text-center">
-                    <p-tag 
-                        [value]="cocktail.alcoholic === true ? 'Yes' : 'No'"
-                        [severity]="cocktail.alcoholic === true ? 'success' : 'warning'"
-                        class="text-sm">
-                    </p-tag>
-                </td>
-                <td (click)="showCocktailIngredientsModal(cocktail)">
-                    <span class="text-sm text-700">{{ cocktail.ingredients.join(', ') }}</span>
-                </td>
-                <td>
-                    <span class="text-sm text-600">{{ cocktail.dateModified }}</span>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template #emptymessage>
-            <tr>
-                <td colspan="7" class="text-center p-4">
-                    <div class="flex flex-column align-items-center">
-                        <span class="text-xl text-500 mb-2">No cocktails found</span>
-                        <span class="text-sm text-400">Try adjusting your filters</span>
+    <ng-template #body let-cocktail>
+        <tr>
+            <td class="py-4 px-6" (click)="goToDetailPage(cocktail.id)">
+                <span class="text-blue-600 hover:underline cursor-pointer">
+                    #{{ cocktail.id }}
+                </span>
+            </td>
+            <td class="py-4 px-6">
+                <div class="flex items-center">
+                    <div class="relative group">
+                        <img [src]="cocktail.thumbnail" [alt]="cocktail.name"
+                            class="w-12 h-12 rounded-lg object-cover shadow-md group-hover:scale-110 transition-transform duration-300"
+                            loading="lazy" />
                     </div>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template #footer>
-            <tr>
-                <td colspan="7" class="text-center p-3">
-                    <div class="flex justify-content-center align-items-center gap-2">
-                        <p-tag value="{{ pageFacade.alcoholicNoAlcoholicCocktails().alcoholic.length }}" severity="success"></p-tag>
-                        <span class="text-sm">alcoholic and</span>
-                        <p-tag value="{{ pageFacade.alcoholicNoAlcoholicCocktails().nonAlcoholic.length }}" severity="warning"></p-tag>
-                        <span class="text-sm">non-alcoholic cocktails</span>
+                </div>
+            </td>
+
+            <td class="py-4 px-6">
+                <div class="flex flex-col">
+                    <span class="font-semibold text-gray-900 dark:text-white text-lg">
+                        {{ cocktail.name }}
+                    </span>
+                    @if (cocktail.glass) {
+                    <span class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                        Served in {{ cocktail.glass }}
+                    </span>
+                    }
+                </div>
+            </td>
+
+            <td>
+                <span>
+                    {{ cocktail.category }}
+                </span>
+            </td>
+            <td>
+                {{cocktail.alcoholic === true ? 'Yes' : 'No'}}
+            </td>
+            <td class="py-4 px-6">
+                <div class="cursor-pointer group" (click)="showCocktailIngredientsModal(cocktail)">
+                    <div
+                        class="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <span
+                            class="text-sm text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-2">
+                            {{ cocktail.ingredients?.slice(0, 3).join(', ') }}
+                            @if (cocktail.ingredients?.length > 3) {
+                            <span class="text-blue-500 font-medium">
+                                +{{ cocktail.ingredients.length - 3 }} more
+                            </span>
+                            }
+                        </span>
                     </div>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-</div>
+                </div>
+            </td>
+            <td>
+                <span>
+                    {{ cocktail.dateModified | date:'shortDate' }}
+                </span>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template #emptymessage>
+        <tr>
+            <td colspan="7" class="text-center py-16">
+                <div class="flex flex-col items-center gap-4">
+                    <div class="text-center">
+                        <span class="text-xl font-semibold text-gray-600 dark:text-gray-400 mb-2">
+                            No cocktails found
+                        </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template #footer>
+        <tr>
+            <td colspan="7" class="text-center p-3">
+                <div class="flex justify-content-center align-items-center gap-2">
+                    <p-tag value="{{ pageFacade.alcoholicNoAlcoholicCocktails().alcoholic.length }}"
+                        severity="success"></p-tag>
+                    <span class="text-sm">alcoholic and</span>
+                    <p-tag value="{{ pageFacade.alcoholicNoAlcoholicCocktails().nonAlcoholic.length }}"
+                        severity="warn"></p-tag>
+                    <span class="text-sm">non-alcoholic cocktails</span>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

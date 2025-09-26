@@ -46,7 +46,7 @@ export class CocktailsList implements OnInit {
       ingredientsWithMeasures: [],
       dateModified: '',
     } as Cocktail));
-  private ref: DynamicDialogRef | undefined;
+  private ref?: DynamicDialogRef;
 
   ngOnInit(): void {
     this.pageFacade.init();
@@ -125,6 +125,6 @@ export class CocktailsList implements OnInit {
         data: {
           ingredientsWithMeasures: cocktail.ingredientsWithMeasures
         }
-    });
+    })!;
   }
 }

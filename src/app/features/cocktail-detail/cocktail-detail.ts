@@ -1,5 +1,5 @@
 import { Component, inject, model, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CocktailDetailPageFacade } from './services/cocktail-detail-page-facade';
 import { TableModule } from 'primeng/table';
@@ -28,10 +28,11 @@ export class CocktailDetail implements OnInit {
   public pageFacade = inject(CocktailDetailPageFacade);
   private readonly dialogService = inject(DialogService);
   private cocktailsListPageFacade = inject(CocktailsListPageFacade);
+  private router = inject(Router);
 
   private readonly destroyRef = takeUntilDestroyed();
   public languague = model(false);
-  private ref: DynamicDialogRef | undefined;
+  private ref?: DynamicDialogRef;
 
   public availableLanguagues = Language;
 
@@ -79,15 +80,18 @@ export class CocktailDetail implements OnInit {
         closable: true,
         closeOnEscape: true,
         dismissableMask: true,
-    });
+    })!;
 
-    this.ref.onClose.subscribe((cocktailId: string) => {
-        const realId = Number(cocktailId);
-        if (realId) {
-          this.pageFacade.setCocktailId(realId);
-          this.pageFacade.getCocktail(realId);
-        }
+    this.ref?.onClose.subscribe((cocktailId: string) => {
+      const realId = Number(cocktailId);
+      if (realId) {
+        this.pageFacade.setCocktailId(realId);
+        this.pageFacade.getCocktail(realId);
+      }
     });
   }
 
+  goBack() {
+    this.router.navigate(['/'])
+  }
 }

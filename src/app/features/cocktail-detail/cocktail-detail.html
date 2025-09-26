@@ -1,4 +1,12 @@
-<!-- TODO: <button></button> de back -->
+<div class="mb-6">
+  <p-button
+    label="Back to List"
+    icon="pi pi-arrow-left"
+    styleClass="p-button-text p-button-plain"
+    (click)="goBack()"
+    class="hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+  />
+</div>
 
 <div>
     @for (language of availableLanguagues | keyvalue; track language.key) {
@@ -13,48 +21,117 @@
 
 <div>
     <div>
-        <img
+<!-- Cocktail Image -->
+        <div class="relative">
+          <img
             [src]="pageFacade.cocktail()?.thumbnail"
             [alt]="pageFacade.cocktail()?.name"
-            class="w-4rem h-4rem border-round object-fit-cover"
-        />
-        
-        <span class="font-medium text-900">{{ pageFacade.cocktail()?.name }}</span>
+            class="w-full h-80 object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 right-4">
+            <h1 class="text-2xl font-bold text-white mb-2 drop-shadow-lg">
+              {{ pageFacade.cocktail()?.name }}
+            </h1>
+            @if (pageFacade.cocktail()?.glass) {
+              <div class="text-gray-200 text-sm flex items-center gap-2 flex-col items-start">
+                <span
+                    class="hover:underline cursor-pointer"
+                    (click)="showCategoryCocktailsModal()">
+                        Category: {{pageFacade.cocktail()?.category}}
+                </span>
+                <span>
+                    Served in {{ pageFacade.cocktail()?.glass }}
+                </span>
+                
+              </div>
+              
+            
+            }
 
-        <div>
-            <p-table
-                [value]="pageFacade.cocktail()?.ingredientsWithMeasures ?? []"
-                [tableStyle]="{ 'min-width': '10rem' }"
-                showGridlines
-            >
-                <ng-template #header>
-                    <tr>
-                        <th style="width:22%">
-                            <div class="flex items-center justify-between">
-                                Ingredient
-                            </div>
-                        </th>
-                        <th style="width:22%">
-                            <div class="flex items-center justify-between">
-                                Measure
-                            </div>
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template #body let-ingredient>
-                    <tr>
-                        <td>{{ ingredient.name }}</td>
-                        <td>{{ ingredient.measure }}</td>
-                    </tr>
-                </ng-template>
-            </p-table>
+          </div>
         </div>
 
-        <div>
-            <span>Instructions</span>
-            <span>{{pageFacade.translatedInstructions()}}</span>
+        <div class="lg:col-span-2 space-y-6">
+            <!-- Ingredients Section -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-4">
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="pi pi-list"></i>
+                        Ingredients & Measurements
+                    </h3>
+                </div>
+            
+                <div class="p-6">
+                    <p-table
+                        [value]="pageFacade.cocktail()?.ingredientsWithMeasures ?? []"
+                        [tableStyle]="{ 'min-width': '100%' }"
+                    >
+                    <ng-template #header>
+                        <tr>
+                        <th class="w-2/3">
+                            <div class="flex items-center gap-2">
+                            <i class="pi pi-circle-fill text-green-500 text-xs"></i>
+                            Ingredient
+                            </div>
+                        </th>
+                        <th class="w-1/3">
+                            <div class="flex items-center gap-2">
+                            <i class="pi pi-calculator text-blue-500 text-xs"></i>
+                            Measure
+                            </div>
+                        </th>
+                        </tr>
+                    </ng-template>
+                    
+                    <ng-template #body let-ingredient>
+                        <tr class="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                        <td class="py-3 px-4">
+                            <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span class="font-medium text-gray-900 dark:text-white">
+                                {{ ingredient.name }}
+                            </span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="text-blue-600 dark:text-blue-400 font-medium">
+                            {{ ingredient.measure || 'To taste' }}
+                            </span>
+                        </td>
+                        </tr>
+                    </ng-template>
+                    </p-table>
+                </div>
         </div>
 
-        <span (click)="showCategoryCocktailsModal()">Category: {{pageFacade.cocktail()!.category}}</span>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-purple-500 to-indigo-600 px-6 py-4">
+            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <i class="pi pi-book"></i>
+                Preparation Instructions
+            </h3>
+            </div>
+            
+            <div class="p-6">
+            @if (pageFacade.translatedInstructions()) {
+                <div class="prose prose-lg max-w-none">
+                <div class="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-lg p-6 border-l-4 border-purple-500">
+                    <p class="text-gray-800 dark:text-gray-200 leading-relaxed text-base">
+                    {{ pageFacade.translatedInstructions() }}
+                    </p>
+                </div>
+                </div>
+            } @else {
+                <div class="text-center py-8">
+                <i class="pi pi-exclamation-triangle text-4xl text-amber-400 mb-3"></i>
+                <p class="text-gray-500 dark:text-gray-400">
+                    Instructions not available in selected language
+                </p>
+                </div>
+            }
+            </div>
+        </div>
+
     </div>
 </div>
