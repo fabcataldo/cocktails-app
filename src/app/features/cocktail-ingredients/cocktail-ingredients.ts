@@ -15,6 +15,5 @@ export class CocktailIngredients implements OnInit{
 
   ngOnInit(): void {
     this.ingredientsWithMeasures = this.config.data.ingredientsWithMeasures;
-    console.log('ID recibido:', this.ingredientsWithMeasures);
   }
 }

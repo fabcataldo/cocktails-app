@@ -25,13 +25,13 @@ export class CocktailInstructionsLanguage implements OnInit {
       'ZH-HANT': '繁體中文'
     };
     const languageToCountry: Record<string, string> = {
-      'EN': 'us',  // o 'gb' para Reino Unido
+      'EN': 'us',
       'ES': 'es',
       'DE': 'de', 
       'FR': 'fr',
       'IT': 'it',
       'ZH-HANS': 'cn',
-      'ZH-HANT': 'tw'  // o 'hk' para Hong Kong
+      'ZH-HANT': 'tw'
     };
 
     this.availableLanguagues.set(
@@ -41,8 +41,7 @@ export class CocktailInstructionsLanguage implements OnInit {
         code: languageToCountry[lang]
       }))
     );
-    
-    console.log(this.availableLanguagues())
+
   }
 
   onLanguagueSelected(event: any){
