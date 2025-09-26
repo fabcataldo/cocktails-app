@@ -9,8 +9,6 @@ export class CocktailDetailPageFacade {
   private destroyRef = inject(DestroyRef);
 
   public cocktail = signal<Cocktail | null>(null);
-  public loading = signal<boolean>(false);
-  public loaded = signal<boolean>(false);
   public translatedInstructions = signal<string | null>(null);
 
   init() {
