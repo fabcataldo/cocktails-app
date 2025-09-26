@@ -1,17 +1,18 @@
 import { Component, OnInit, output, signal } from '@angular/core';
 import { Language } from '../../../data-access/interfaces';
 import { SelectModule } from 'primeng/select';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cocktail-instructions-language',
-  imports: [SelectModule],
+  imports: [FormsModule, SelectModule],
   templateUrl: './cocktail-instructions-language.html',
   styleUrl: './cocktail-instructions-language.scss'
 })
 export class CocktailInstructionsLanguage implements OnInit {
   public availableLanguagues = signal<Array<any>>([]);
-  public languageSelected: string | undefined;
   public onLanguageSelected = output<string>();
+  public languageSelected: string | null = null; 
 
   ngOnInit(): void {
     const languageLabels: Record<string, string> = {

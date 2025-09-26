@@ -2,7 +2,7 @@
     <label class="pr-2">Choose Instructions Language:</label>
     <p-select
         [options]="availableLanguagues()"
-        (model)="languageSelected"
+        [(ngModel)]="languageSelected"
         optionLabel="label"
         optionValue="value"
         placeholder="Select a language"
@@ -19,7 +19,7 @@
                         [class]="'flag flag-' + selectedOption.code.toLowerCase()"
                         style="width: 18px"
                     />
-                    <div>{{ selectedOption.name }}</div>
+                    <div>{{ selectedOption.label }}</div>
                 </div>
             }
 
