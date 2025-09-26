@@ -33,6 +33,8 @@ export class CocktailsListPageFacade implements OnDestroy {
   error = signal<any>(null);
   loaded = signal<boolean>(false);
 
+  cocktailsListTitle = signal<string>("List of Cocktails by First Letter");
+
   private subs = new Subscription();
 
   public setCocktailsByFilterSuscription(){
@@ -146,15 +148,16 @@ export class CocktailsListPageFacade implements OnDestroy {
   }
 
   searchByFilters(event: any){
-    if(event.filters?.length){
-      //TODO: sólo implemento filtro de nombre, implementar el resto más adelante
+    if(event.filters.name[0].value){
       this.filters.set(event.filters)
-       if(this.filters()[0].name.value) {
-          this.cocktailsFacade.getCocktailsByLetterOrName(this.filters()[0].name.value);
-       } else {
-          this.cocktailsFacade.getCocktailsByLetterOrName('a');
+       if(event.filters.name[0].value?.length > 0) {
+          this.cocktailsFacade.getCocktailsByLetterOrName(this.filters().name[0].value.trim().toLowerCase());
+          this.cocktailsListTitle.set("List of Cocktails filtered by Name");
        }
-    }   
+    } else {
+      this.cocktailsFacade.getCocktailsByLetterOrName('a');
+      this.cocktailsListTitle.set("List of Cocktails by First Letter");
+    }
   }
 
   selectCocktailsCategory(category: string){
