@@ -76,6 +76,9 @@ export class CocktailDetail implements OnInit {
             '960px': '75vw',
             '640px': '90vw'
         },
+        closable: true,
+        closeOnEscape: true,
+        dismissableMask: true,
     });
 
     this.ref.onClose.subscribe((cocktailId: string) => {
