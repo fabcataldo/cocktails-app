@@ -1,6 +1,10 @@
+<div class="text-left py-4 px-6 font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700">
+    {{pageFacade.cocktailsListTitle()}}
+</div>
+
 <p-table #cocktailsTable [value]="pageFacade.loaded() ? pageFacade.cocktailsByLetterOrName()! : skeletonRows"
     [tableStyle]="{ 'min-width': '60rem' }" [loading]="pageFacade.loading()" [lazy]="true"
-    [filters]="pageFacade.filters()" [rowHover]="true" (onLazyLoad)="pageFacade.searchByFilters($event)" showGridlines>
+    [filters]="pageFacade.filters()" [rowHover]="true" (onLazyLoad)="pageFacade.searchByFilters($event)">
     <ng-template #header>
         <tr class="border-b border-gray-200 dark:border-gray-700">
             <th class="text-left py-4 px-6 font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700">
@@ -21,7 +25,15 @@
                         <i class="pi pi-glass text-gray-500"></i>
                         Name
                     </div>
-                    <p-columnFilter type="text" field="name" ariaLabel="Filter Name" styleClass="ml-2" />
+                    <p-columnFilter
+                        type="text"
+                        field="name"
+                        ariaLabel="Filter Name"
+                        display="menu"
+                        styleClass="ml-2" 
+                        [showMatchModes]="false"
+                        [showOperator]="false"
+                        [showAddButton]="false"/>
                 </div>
             </th>
             <th class="text-left py-4 px-6 font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700">
@@ -128,7 +140,7 @@
     <ng-template #footer>
         <tr>
             <td colspan="7" class="text-center p-3">
-                <div class="flex justify-content-center align-items-center gap-2">
+                <div class="flex justify-center items-center gap-2">
                     <p-tag value="{{ pageFacade.alcoholicNoAlcoholicCocktails().alcoholic.length }}"
                         severity="success"></p-tag>
                     <span class="text-sm">alcoholic and</span>
