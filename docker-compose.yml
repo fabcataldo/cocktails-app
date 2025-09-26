@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  cocktails-app:
+    container_name: cocktails-app-container
+    build: .
+    ports:
+      - "4200:4200"
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
+    command: "ng serve --host 0.0.0.0 --port 4200"
+    stdin_open: true
+    tty: true
