@@ -4,7 +4,7 @@ Cocktail App es una aplicación web en Angular 20, diseñada para obtener inform
 
 # Tecnologías principales utilizadas
 
-Angular, PrimeNG, Tailwind CSS, Typescript, NgRx
+Angular, PrimeNG, Tailwind CSS, TypeScript, NgRx, Docker.
 
 # Características
 
