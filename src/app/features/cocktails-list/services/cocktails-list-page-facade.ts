@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, inject, signal } from '@angular/core';
-import { Cocktail, CocktailFilter, CocktailFilterAPIResponseItem } from '../../../data-access/interfaces';
+import { Cocktail, CocktailFilter } from '../../../data-access/interfaces';
 import { CocktailsFacade } from '../../../data-access/states/cocktails/cocktails.facade';
 import { AlcoholicsFacade } from '../../../data-access/states/alcoholics/alcoholics.facade';
 import { GlassesFacade } from '../../../data-access/states/glasses/glasses.facade';
@@ -33,7 +33,6 @@ export class CocktailsListPageFacade implements OnDestroy {
   error = signal<any>(null);
   loaded = signal<boolean>(false);
 
-  
   private subs = new Subscription();
 
   public setCocktailsByFilterSuscription(){

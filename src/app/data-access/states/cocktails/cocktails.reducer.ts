@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as actions from './cocktails.actions';
-import { Cocktail, CocktailFilterAPIResponseItem } from '../../interfaces';
+import { Cocktail } from '../../interfaces';
 
 export interface CocktailsState {
     cocktailsByLetterOrName: Cocktail[];

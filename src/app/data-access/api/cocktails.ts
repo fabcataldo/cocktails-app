@@ -7,7 +7,6 @@ import {
   CocktailApiResponse,
   CocktailFilter,
   CocktailFilterAPIResponse,
-  CocktailFilterAPIResponseItem,
   CocktailFiltersIdEnum,
   CocktailsSearchType,
   GlassApiResponse,
@@ -151,7 +150,7 @@ export class CocktailsService {
         catchError(this.handleError)
     );
   }
-  
+
   private buildCocktailsByLetterOrNameUrl(text: string): string {
     const BASE_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php';
     const searchParam = text.length === 1 ? CocktailsSearchType.BY_FIRST_LETTER : CocktailsSearchType.BY_NAME;

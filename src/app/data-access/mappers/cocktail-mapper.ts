@@ -28,7 +28,7 @@ export function processCocktail(cocktail: CocktailApiItem): Cocktail {
 
   const ingredientsWithMeasures = ingredients.map((ingredient, index) => ({
     name: ingredient,
-    measure: measures[index] || ''
+    measure: measures[index] || null
   }));
 
   return {

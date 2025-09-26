@@ -2,8 +2,6 @@ import { Component, effect, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CocktailsListPageFacade } from './features/cocktails-list/services/cocktails-list-page-facade';
-import { toObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Cocktail, CocktailFilterAPIResponseItem } from '../../interfaces';
+import { Cocktail } from '../../interfaces';
 import { CocktailFilter } from '../../interfaces/cocktail-filters-id.enum';
 
 export const init = createAction(
