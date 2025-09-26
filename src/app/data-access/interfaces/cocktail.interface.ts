@@ -19,10 +19,10 @@ export interface Instructions {
   FR: string | null;
   IT: string | null;
   ZH_HANS: string | null;
-  ZH_HANT: string | null;  
+  ZH_HANT: string | null;
 }
 
-interface IngredientWithMeasure {
+export interface IngredientWithMeasure {
   name: string;
-  measure: string;
+  measure?: string | null;
 }

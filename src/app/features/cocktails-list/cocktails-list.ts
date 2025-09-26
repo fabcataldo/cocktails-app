@@ -5,17 +5,23 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { Cocktail } from '../../data-access/interfaces';
 import { TagModule } from 'primeng/tag';
 import { Router } from '@angular/router';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { CocktailIngredients } from '../cocktail-ingredients/cocktail-ingredients';
 
 @Component({
   selector: 'app-cocktails-list',
   imports: [TableModule, MultiSelectModule, TagModule],
   templateUrl: './cocktails-list.html',
   styleUrl: './cocktails-list.scss',
-  providers: [CocktailsListPageFacade]
+  providers: [
+    CocktailsListPageFacade,
+    DialogService
+  ]
 })
 export class CocktailsList implements OnInit {
   public readonly pageFacade = inject(CocktailsListPageFacade);
   public router = inject(Router);
+  private readonly dialogService = inject(DialogService);
 
   public columns: any[] = [];
   public skeletonRows = Array(10).fill(null).map((_, index) => ({
@@ -39,6 +45,7 @@ export class CocktailsList implements OnInit {
       ingredientsWithMeasures: [],
       dateModified: '',
     } as Cocktail));
+  private ref: DynamicDialogRef | undefined;
 
   ngOnInit(): void {
     this.pageFacade.init();
@@ -100,5 +107,23 @@ export class CocktailsList implements OnInit {
 
   goToDetailPage(id: string){
     this.router.navigate([`/detail`, id]);
+  }
+
+  showCocktailIngredientsModal(cocktail: Cocktail) {
+    this.ref = this.dialogService.open(CocktailIngredients, {
+        header: `Ingredients of "${cocktail.name}"`,
+        width: '50vw',
+        modal:true,
+        breakpoints: {
+            '960px': '75vw',
+            '640px': '90vw'
+        },
+        closable: true,
+        closeOnEscape: true,
+        dismissableMask: true,
+        data: {
+          ingredientsWithMeasures: cocktail.ingredientsWithMeasures
+        }
+    });
   }
 }

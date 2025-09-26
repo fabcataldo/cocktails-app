@@ -82,7 +82,7 @@
                         class="text-sm">
                     </p-tag>
                 </td>
-                <td>
+                <td (click)="showCocktailIngredientsModal(cocktail)">
                     <span class="text-sm text-700">{{ cocktail.ingredients.join(', ') }}</span>
                 </td>
                 <td>

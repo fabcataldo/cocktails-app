@@ -1,0 +1,30 @@
+<div class="card">   
+    <div>
+        <p-table
+            [value]="ingredientsWithMeasures"
+            [tableStyle]="{ 'min-width': '10rem' }"
+            showGridlines
+        >
+            <ng-template #header>
+                <tr>
+                    <th style="width:22%">
+                        <div class="flex items-center justify-between">
+                            Ingredient
+                        </div>
+                    </th>
+                    <th style="width:22%">
+                        <div class="flex items-center justify-between">
+                            Measure
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-ingredient>
+                <tr>
+                    <td>{{ ingredient.name }}</td>
+                    <td>{{ ingredient.measure ?? '-'}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
