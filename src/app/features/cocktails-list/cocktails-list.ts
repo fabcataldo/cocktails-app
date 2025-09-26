@@ -7,10 +7,11 @@ import { TagModule } from 'primeng/tag';
 import { Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CocktailIngredients } from '../cocktail-ingredients/cocktail-ingredients';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cocktails-list',
-  imports: [TableModule, MultiSelectModule, TagModule],
+  imports: [TableModule, MultiSelectModule, TagModule, CommonModule],
   templateUrl: './cocktails-list.html',
   styleUrl: './cocktails-list.scss',
   providers: [
