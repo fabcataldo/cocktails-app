@@ -40,7 +40,7 @@ export class CocktailsList implements OnInit {
         ZH_HANS: null,
         ZH_HANT: null,
       },
-      thumbnail: '/assets/skeleton-image.png', // O una imagen placeholder
+      thumbnail: '',
       ingredients: [],
       measures: [],
       ingredientsWithMeasures: [],

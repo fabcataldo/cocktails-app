@@ -148,16 +148,16 @@ export class CocktailsListPageFacade implements OnDestroy {
   }
 
   searchByFilters(event: any){
-    if(event.filters.name[0].value){
-      this.filters.set(event.filters)
-       if(event.filters.name[0].value?.length > 0) {
-          this.cocktailsFacade.getCocktailsByLetterOrName(this.filters().name[0].value.trim().toLowerCase());
-          this.cocktailsListTitle.set("List of Cocktails filtered by Name");
-       }
-    } else {
-      this.cocktailsFacade.getCocktailsByLetterOrName('a');
-      this.cocktailsListTitle.set("List of Cocktails by First Letter");
+    const filterName = event.filters?.name?.[0]?.value?.trim();
+    if(filterName){
+      this.filters.set(event.filters);
+      this.cocktailsFacade.getCocktailsByLetterOrName(filterName.toLowerCase());
+      this.cocktailsListTitle.set("List of Cocktails filtered by Name");
+      return;
     }
+    
+    this.cocktailsFacade.getCocktailsByLetterOrName('a');
+    this.cocktailsListTitle.set("List of Cocktails by First Letter");
   }
 
   selectCocktailsCategory(category: string){
