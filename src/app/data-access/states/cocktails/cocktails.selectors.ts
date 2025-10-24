@@ -32,3 +32,8 @@ export const getRandomCocktail = createSelector(
   cocktailsState,
   (state) => state.randomCocktail
 )
+
+export const getSelectedCocktailsCategory = createSelector(
+  cocktailsState,
+  (state => state.selectedCocktailsCategory)
+)

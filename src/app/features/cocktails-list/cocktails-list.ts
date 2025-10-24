@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CocktailIngredients } from '../cocktail-ingredients/cocktail-ingredients';
 import { CommonModule } from '@angular/common';
+import { CategoryCocktailsModalPageFacade } from '../category-cocktails-modal/services/category-cocktails-modal-page-facade';
 
 @Component({
   selector: 'app-cocktails-list',
@@ -16,13 +17,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './cocktails-list.scss',
   providers: [
     CocktailsListPageFacade,
-    DialogService
+    CategoryCocktailsModalPageFacade
   ]
 })
 export class CocktailsList implements OnInit {
   public readonly pageFacade = inject(CocktailsListPageFacade);
   public router = inject(Router);
   private readonly dialogService = inject(DialogService);
+  public categoryCocktailsModalPageFacade = inject(CategoryCocktailsModalPageFacade);
 
   public columns: any[] = [];
   public skeletonRows = Array(10).fill(null).map((_, index) => ({
@@ -50,6 +52,8 @@ export class CocktailsList implements OnInit {
 
   ngOnInit(): void {
     this.pageFacade.init();
+    this.categoryCocktailsModalPageFacade.init();
+
     this.loadColumns();
   }
 
@@ -127,4 +131,5 @@ export class CocktailsList implements OnInit {
         }
     })!;
   }
+
 }

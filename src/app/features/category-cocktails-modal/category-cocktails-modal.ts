@@ -1,18 +1,18 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CocktailsListPageFacade } from '../cocktails-list/services/cocktails-list-page-facade';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Cocktail } from '../../data-access/interfaces';
 
 @Component({
   selector: 'app-category-cocktails-modal',
   imports: [CarouselModule],
   templateUrl: './category-cocktails-modal.html',
-  styleUrl: './category-cocktails-modal.scss',
-  providers: [CocktailsListPageFacade]
+  styleUrl: './category-cocktails-modal.scss'
 })
 export class CategoryCocktailsModal implements OnInit{
-  public cocktailsListPageFacade = inject(CocktailsListPageFacade);
+  cocktailsCategory = signal<Cocktail[]>([]);
   private ref = inject(DynamicDialogRef);
+  private config = inject(DynamicDialogConfig);
 
   responsiveOptions = [
     {
@@ -38,7 +38,7 @@ export class CategoryCocktailsModal implements OnInit{
   ];
 
   ngOnInit(): void {
-    this.cocktailsListPageFacade.setCocktailsByFilterSuscription();
+    this.cocktailsCategory.set(this.config.data ?? []);
   }
 
   onCocktailClick(id: string){

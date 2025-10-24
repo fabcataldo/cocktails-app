@@ -4,7 +4,7 @@ import { Cocktail } from '../../interfaces';
 
 export interface CocktailsState {
     cocktailsByLetterOrName: Cocktail[];
-    cocktailsByFilter: Cocktail[];
+    cocktailsByFilter: Cocktail[] | undefined;
     error: any;
     loading: boolean;
     loaded: boolean;
@@ -14,7 +14,7 @@ export interface CocktailsState {
 
 const initialState: CocktailsState = {
     cocktailsByLetterOrName: [],
-    cocktailsByFilter: [],
+    cocktailsByFilter: undefined,
     error: null,
     loading: false,
     loaded: false,
@@ -27,11 +27,12 @@ export const cocktailsReducer = createReducer(
     on(actions.init, (state) => ({
         ...state,
         cocktailsByLetterOrName: [],
-        cocktailsByFilter: [],
+        cocktailsByFilter: undefined,
         error: null,
         loading: false,
         loaded: false,
-        randomCocktail: null
+        randomCocktail: null,
+        selectedCocktailsCategory: null
     })),
     on(actions.getCocktailsByLetterOrName, (state) => ({
         ...state,

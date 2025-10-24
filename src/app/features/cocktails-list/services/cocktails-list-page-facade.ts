@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, inject, signal } from '@angular/core';
-import { Cocktail, CocktailFilter } from '../../../data-access/interfaces';
+import { Cocktail, CocktailFilter, CocktailFiltersIdEnum } from '../../../data-access/interfaces';
 import { CocktailsFacade } from '../../../data-access/states/cocktails/cocktails.facade';
 import { AlcoholicsFacade } from '../../../data-access/states/alcoholics/alcoholics.facade';
 import { GlassesFacade } from '../../../data-access/states/glasses/glasses.facade';
@@ -18,21 +18,19 @@ export class CocktailsListPageFacade implements OnDestroy {
   private categoriesFacade = inject(CategoriesFacade);
   private cocktailFacade = inject(CocktailFacade);
 
+
   cocktailsByLetterOrName = signal<Cocktail[]>([]);
   loading = signal<boolean>(false);
   alcoholicNoAlcoholicCocktails = signal<{alcoholic: Cocktail[], nonAlcoholic: Cocktail[] }>({alcoholic: [], nonAlcoholic: []});
   cocktailsByFilter = signal<Cocktail[] | null>(null);
   randomCocktail = signal<Cocktail | null>(null);
-
   filters = signal<any>([]);
-  
   categoriesFilterItems = signal<filter[]>([]);
   glassesFilterItems = signal<filter[]>([]);
   ingredientsFilterItems = signal<filter[]>([]);
   alcoholicsFilterItems = signal<filter[]>([]);
   error = signal<any>(null);
   loaded = signal<boolean>(false);
-
   cocktailsListTitle = signal<string>("List of Cocktails by First Letter");
 
   private subs = new Subscription();
@@ -167,4 +165,16 @@ export class CocktailsListPageFacade implements OnDestroy {
   getRandomCocktail() {
     this.cocktailsFacade.getRandomCocktail();
   }
+
+  prepareCategoryCocktailsModal(category: string) {
+    this.selectCocktailsCategory(category!);
+    this.getCocktailsByFilter(
+      {
+        id: CocktailFiltersIdEnum.Category,
+        name: category
+      }
+    );
+  }
+
+  
 }

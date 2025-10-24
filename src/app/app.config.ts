@@ -28,6 +28,7 @@ import { cocktailReducer } from './data-access/states/cocktail/cocktail.reducer'
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
+import { DialogService } from 'primeng/dynamicdialog';
 
 
 export const appConfig: ApplicationConfig = {
@@ -65,6 +66,7 @@ export const appConfig: ApplicationConfig = {
     GlassesFacade,
     IngredientsFacade,
     CocktailsFacade,
-    CocktailFacade
+    CocktailFacade,
+    DialogService
   ],
 };

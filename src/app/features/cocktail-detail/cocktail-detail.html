@@ -10,9 +10,8 @@
     />
 </div>
 
-<div        class="mb-5">
+<div class="mb-5">
     <app-cocktail-instructions-language
-
         (onLanguageSelected)="onLanguagueChange($event)">
     </app-cocktail-instructions-language>
 </div>
@@ -20,9 +19,9 @@
 <div>
     <div class="relative">
         <img
-        [src]="pageFacade.cocktail()?.thumbnail"
-        [alt]="pageFacade.cocktail()?.name"
-        class="w-full h-80 object-cover"
+            [src]="pageFacade.cocktail()?.thumbnail"
+            [alt]="pageFacade.cocktail()?.name"
+            class="w-full h-80 object-cover"
         />
         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
         <div class="absolute bottom-4 left-4 right-4">
@@ -33,7 +32,7 @@
             <div class="text-gray-200 text-sm flex items-center gap-2 flex-col items-start">
             <span
                 class="hover:underline cursor-pointer"
-                (click)="showCategoryCocktailsModal()">
+                (click)="cocktailsListPageFacade.prepareCategoryCocktailsModal(pageFacade.cocktail()?.category!)">
                     Category: {{pageFacade.cocktail()?.category}}
             </span>
             <span>
