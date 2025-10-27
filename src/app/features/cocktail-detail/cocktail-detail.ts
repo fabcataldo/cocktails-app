@@ -4,7 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CocktailDetailPageFacade } from './services/cocktail-detail-page-facade';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-import {CommonModule} from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { CocktailsListPageFacade } from '../cocktails-list/services/cocktails-list-page-facade';
 import { CocktailInstructionsLanguage } from './cocktail-instructions-language/cocktail-instructions-language';
 import { CategoryCocktailsModalPageFacade } from '../category-cocktails-modal/services/category-cocktails-modal-page-facade';
@@ -35,12 +35,14 @@ export class CocktailDetail implements OnInit {
   private readonly destroyRef = takeUntilDestroyed();
   public languague = model(false);
 
-  ngOnInit(): void {   
+  ngOnInit(): void {
     this.pageFacade.init();
+    this.categoryCocktailsModalPageFacade.init();
+
     this.route.params
       .pipe(this.destroyRef)
       .subscribe({
-        next: (params:any) => {
+        next: (params: any) => {
           const realId = Number(params['id']);
 
           this.categoryCocktailsModalPageFacade.init();
@@ -59,6 +61,26 @@ export class CocktailDetail implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/'])
+    this.router.navigate(['/']);
+  }
+
+  prepareDetailCocktailsCategoryModal() {
+    this.cocktailsListPageFacade.prepareCategoryCocktailsModal(
+      this.pageFacade.cocktail()?.category!
+    );
+
+    this.categoryCocktailsModalPageFacade.isModalRefSetted
+      .pipe(this.destroyRef)
+      .subscribe(value => {
+        if(value) {
+          this.categoryCocktailsModalPageFacade.categoryCocktailsModalRef?.onClose
+            .subscribe(resp => {
+              if (resp) {
+                this.pageFacade.setCocktailId(resp);
+                this.pageFacade.getCocktail(resp);
+              }
+            });
+        }
+      });
   }
 }

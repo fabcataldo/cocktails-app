@@ -1,7 +1,7 @@
 import { inject, Injectable, OnDestroy, signal } from '@angular/core';
 import { CocktailsFacade } from '../../../data-access/states/cocktails/cocktails.facade';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Cocktail } from '../../../data-access/interfaces';
 import { CategoryCocktailsModal } from '../category-cocktails-modal';
 
@@ -11,9 +11,10 @@ export class CategoryCocktailsModalPageFacade implements OnDestroy {
   private dialogService = inject(DialogService);
 
   public currentCocktailsCategory = '';
-  private categoryCocktailsModalRef: DynamicDialogRef | undefined = undefined;
+  public categoryCocktailsModalRef: DynamicDialogRef | undefined = undefined;
   private subs = new Subscription();
-  cocktailsByFilter = signal<Cocktail[] | null>(null);
+  public cocktailsByFilter = signal<Cocktail[] | null>(null);
+  public isModalRefSetted = new Subject<boolean>();
 
   ngOnDestroy(): void {
     if(this.categoryCocktailsModalRef){
@@ -36,7 +37,6 @@ export class CategoryCocktailsModalPageFacade implements OnDestroy {
       if(data){
         this.cocktailsByFilter.set(data);
 
-        console.log('abrilooo modaaal')
         if(data && data.length) {
           this.showCategoryCocktailsModal(
             this.currentCocktailsCategory,
@@ -49,8 +49,7 @@ export class CategoryCocktailsModalPageFacade implements OnDestroy {
 
   private showCategoryCocktailsModal(
     category: string,
-    extraData?: any,
-    dialogOnCloseCallback?: () => any,
+    extraData?: any
   ) {
     
     this.categoryCocktailsModalRef = this.dialogService.open(CategoryCocktailsModal, {
@@ -66,14 +65,6 @@ export class CategoryCocktailsModalPageFacade implements OnDestroy {
         dismissableMask: true,
         data: extraData ?? {}
     })!;
-    
-
-    if(dialogOnCloseCallback){
-      this.categoryCocktailsModalRef.onClose.subscribe(
-        dialogOnCloseCallback
-      );
-    }
-    
+    this.isModalRefSetted.next(true);
   }
-
 }
