@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CocktailsListPageFacade } from './services/cocktails-list-page-facade';
 import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -20,7 +20,8 @@ import { CategoryCocktailsModalPageFacade } from '../category-cocktails-modal/se
     CategoryCocktailsModalPageFacade
   ]
 })
-export class CocktailsList implements OnInit {
+export class CocktailsList implements OnInit, OnDestroy {
+  
   public readonly pageFacade = inject(CocktailsListPageFacade);
   public router = inject(Router);
   private readonly dialogService = inject(DialogService);
@@ -48,13 +49,16 @@ export class CocktailsList implements OnInit {
       ingredientsWithMeasures: [],
       dateModified: '',
     } as Cocktail));
-  private ref?: DynamicDialogRef;
+  private cocktailIngredientsModalRef?: DynamicDialogRef;
 
   ngOnInit(): void {
     this.pageFacade.init();
     this.categoryCocktailsModalPageFacade.init();
-
     this.loadColumns();
+  }
+
+  ngOnDestroy(): void {
+    this.cocktailIngredientsModalRef?.destroy();
   }
 
   loadColumns(): void {
@@ -115,7 +119,7 @@ export class CocktailsList implements OnInit {
   }
 
   showCocktailIngredientsModal(cocktail: Cocktail) {
-    this.ref = this.dialogService.open(CocktailIngredients, {
+    this.cocktailIngredientsModalRef = this.dialogService.open(CocktailIngredients, {
         header: `Ingredients of "${cocktail.name}"`,
         width: '50vw',
         modal:true,
