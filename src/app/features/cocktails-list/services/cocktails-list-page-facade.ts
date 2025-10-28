@@ -18,7 +18,6 @@ export class CocktailsListPageFacade implements OnDestroy {
   private categoriesFacade = inject(CategoriesFacade);
   private cocktailFacade = inject(CocktailFacade);
 
-
   cocktailsByLetterOrName = signal<Cocktail[]>([]);
   loading = signal<boolean>(false);
   alcoholicNoAlcoholicCocktails = signal<{alcoholic: Cocktail[], nonAlcoholic: Cocktail[] }>({alcoholic: [], nonAlcoholic: []});
@@ -141,10 +140,6 @@ export class CocktailsListPageFacade implements OnDestroy {
     this.cocktailsFacade.getCocktailsByLetterOrName(text);
   }
 
-  getCocktailsByFilter(filter: CocktailFilter){
-    this.cocktailsFacade.getCocktailsByFilter(filter);
-  }
-
   searchByFilters(event: any){
     const filterName = event.filters?.name?.[0]?.value?.trim();
     if(filterName){
@@ -158,23 +153,8 @@ export class CocktailsListPageFacade implements OnDestroy {
     this.cocktailsListTitle.set("List of Cocktails by First Letter");
   }
 
-  selectCocktailsCategory(category: string){
-    this.cocktailsFacade.selectCocktailsCategory(category); 
-  }
-
   getRandomCocktail() {
     this.cocktailsFacade.getRandomCocktail();
   }
 
-  prepareCategoryCocktailsModal(category: string) {
-    this.selectCocktailsCategory(category!);
-    this.getCocktailsByFilter(
-      {
-        id: CocktailFiltersIdEnum.Category,
-        name: category
-      }
-    );
-  }
-
-  
 }

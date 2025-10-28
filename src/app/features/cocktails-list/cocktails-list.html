@@ -2,9 +2,19 @@
     {{pageFacade.cocktailsListTitle()}}
 </div>
 
-<p-table #cocktailsTable [value]="pageFacade.loaded() ? pageFacade.cocktailsByLetterOrName()! : skeletonRows"
-    [tableStyle]="{ 'min-width': '60rem' }" [loading]="pageFacade.loading()" [lazy]="true"
-    [filters]="pageFacade.filters()" [rowHover]="true" (onLazyLoad)="pageFacade.searchByFilters($event)">
+<p-table
+    #cocktailsTable
+    [value]="pageFacade.loaded()
+        ? pageFacade.cocktailsByLetterOrName()!
+        : skeletonRows"
+    [tableStyle]="{ 'min-width': '60rem' }"
+    [loading]="pageFacade.loading()
+        && !categoryCocktailsModalPageFacade.selectedCocktailsCategory()"
+    [lazy]="true"
+    [filters]="pageFacade.filters()"
+    [rowHover]="true"
+    (onLazyLoad)="pageFacade.searchByFilters($event)"
+>
     <ng-template #header>
         <tr class="border-b border-gray-200 dark:border-gray-700">
             <th class="text-left py-4 px-6 font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700">
@@ -94,7 +104,7 @@
             </td>
 
             <td>
-                <span (click)="pageFacade.prepareCategoryCocktailsModal(cocktail.category!)">
+                <span (click)="openCocktailsCategoryModal(cocktail.category)">
                     {{ cocktail.category }}
                 </span>
             </td>

@@ -10,6 +10,7 @@ export interface CocktailsState {
     loaded: boolean;
     selectedCocktailsCategory: string | null;
     randomCocktail: Cocktail | null;
+    loadedCocktailsByFilter: boolean;
 }
 
 const initialState: CocktailsState = {
@@ -19,7 +20,8 @@ const initialState: CocktailsState = {
     loading: false,
     loaded: false,
     selectedCocktailsCategory: null,
-    randomCocktail: null
+    randomCocktail: null,
+    loadedCocktailsByFilter: false
 };
 
 export const cocktailsReducer = createReducer(
@@ -32,14 +34,16 @@ export const cocktailsReducer = createReducer(
         loading: false,
         loaded: false,
         randomCocktail: null,
-        selectedCocktailsCategory: null
+        selectedCocktailsCategory: null,
+        loadedCocktailsByFilter: false
     })),
     on(actions.getCocktailsByLetterOrName, (state) => ({
         ...state,
         loading: true,
         error: null,
         cocktailsByLetterOrName: [],
-        loaded: false
+        loaded: false,
+        selectedCocktailsCategory: null
     })),
     on(actions.getCocktailsByLetterOrNameSuccess, (state, { cocktailsByLetterOrName }) => ({
         ...state,
@@ -60,21 +64,21 @@ export const cocktailsReducer = createReducer(
         loading: true,
         error: null,
         cocktailsByFilter: [],
-        loaded: false
+        loadedCocktailsByFilter: false
     })),
     on(actions.getCocktailsByFilterSuccess, (state, { cocktailsByFilter }) => ({
         ...state,
         loading: false,
         error: null,
         cocktailsByFilter: cocktailsByFilter,
-        loaded: true
+        loadedCocktailsByFilter: false
     })),
     on(actions.getCocktailsByFilterFailure, (state, { error }) => ({
         ...state,
         loading: false,
         error,
-        loaded: false,
-        cocktailsByFilter: []
+        cocktailsByFilter: [],
+        loadedCocktailsByFilter: false
     })),
     on(actions.setSelectedCocktailsCategory, (state, { category }) => ({
         ...state,

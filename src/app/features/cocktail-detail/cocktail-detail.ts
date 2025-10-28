@@ -64,23 +64,9 @@ export class CocktailDetail implements OnInit {
     this.router.navigate(['/']);
   }
 
-  prepareDetailCocktailsCategoryModal() {
-    this.cocktailsListPageFacade.prepareCategoryCocktailsModal(
+  openCocktailsCategoryModal() {
+    this.categoryCocktailsModalPageFacade.prepareCategoryCocktailsModal(
       this.pageFacade.cocktail()?.category!
     );
-
-    this.categoryCocktailsModalPageFacade.isModalRefSetted
-      .pipe(this.destroyRef)
-      .subscribe(value => {
-        if(value) {
-          this.categoryCocktailsModalPageFacade.categoryCocktailsModalRef?.onClose
-            .subscribe(resp => {
-              if (resp) {
-                this.pageFacade.setCocktailId(resp);
-                this.pageFacade.getCocktail(resp);
-              }
-            });
-        }
-      });
   }
 }

@@ -132,4 +132,8 @@ export class CocktailsList implements OnInit {
     })!;
   }
 
+  openCocktailsCategoryModal(category: string) {
+    this.categoryCocktailsModalPageFacade.prepareCategoryCocktailsModal(category);
+  }
+
 }
