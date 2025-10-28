@@ -21,13 +21,6 @@ export class CategoryCocktailsModalPageFacade implements OnDestroy {
   public categoryCocktailsModalRef: DynamicDialogRef | undefined = undefined;
   private subs = new Subscription();  
 
-  ngOnDestroy(): void {
-    if(this.categoryCocktailsModalRef){
-      this.categoryCocktailsModalRef.destroy();
-    }    
-    this.subs.unsubscribe();
-  }
-
   init() {
     this.cocktailsFacade.init();
     this.cocktailFacade.init();
@@ -51,27 +44,19 @@ export class CategoryCocktailsModalPageFacade implements OnDestroy {
         }
       }
     }));
-
-    this.subs.add(
-      this.cocktailsFacade.selectedCocktailsCategory$.subscribe(data => {
-        if(data){
-          this.selectedCocktailsCategory.set(true);
-        } else {
-          this.selectedCocktailsCategory.set(false);
-        }
-      })
-    )
+  }
+  
+  ngOnDestroy(): void {
+    if(this.categoryCocktailsModalRef){
+      this.categoryCocktailsModalRef.destroy();
+    }    
+    this.subs.unsubscribe();
   }
 
-  //TODO: quedó mejor... pero ahora, si abro el modal y veo el detalle
-  //de un cocktail en la pág del listado, luego desde en la pag de detalle
-  //abro el modal, veo el detalle de uno, y no cambia
-  //y viceversa
   private showCategoryCocktailsModal(
     category: string,
     extraData?: any
   ) {
-    
     this.categoryCocktailsModalRef = this.dialogService.open(CategoryCocktailsModal, {
         header: `Cocktails of "${category}" Category`,
         width: '50vw',
@@ -86,26 +71,25 @@ export class CategoryCocktailsModalPageFacade implements OnDestroy {
         data: extraData ?? {}
     })!;
 
-    console.log('this.categoryCocktailsModalRef')
-    console.log(this.categoryCocktailsModalRef)
     if(this.categoryCocktailsModalRef){
       this.subs.add(
         this.categoryCocktailsModalRef.onClose.subscribe(resp => {
-          console.log('resp')
-          console.log(resp)
+          this.selectedCocktailsCategory.set(false);
           if(resp) {
             const realCocktailId = Number(resp);
             this.cocktailFacade.setCocktailId(realCocktailId);
             this.cocktailFacade.getCocktail(realCocktailId);
+            this.router.navigate([`/detail`, realCocktailId]);
           }
         })
       );
     }
-    
   }
 
   prepareCategoryCocktailsModal(category: string) {
+    this.selectedCocktailsCategory.set(true);
     this.selectCocktailsCategory(category!);
+    
     this.getCocktailsByFilter(
       {
         id: CocktailFiltersIdEnum.Category,
@@ -120,7 +104,6 @@ export class CategoryCocktailsModalPageFacade implements OnDestroy {
 
   private selectCocktailsCategory(category: string){
     this.cocktailsFacade.selectCocktailsCategory(category); 
-    
   }
 
 }

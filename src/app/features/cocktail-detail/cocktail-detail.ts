@@ -45,8 +45,6 @@ export class CocktailDetail implements OnInit {
         next: (params: any) => {
           const realId = Number(params['id']);
 
-          this.categoryCocktailsModalPageFacade.init();
-
           this.pageFacade.setCocktailId(realId);
           this.pageFacade.getCocktail(realId);
         },
