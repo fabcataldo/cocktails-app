@@ -47,10 +47,19 @@
                 </div>
             </th>
             <th class="text-left py-4 px-6 font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700">
-                <div class="flex items-center gap-2">
-                    <i class="pi pi-tags text-gray-500"></i>
-                    Category
-                </div>
+                    <div class="flex items-center gap-2">                        
+                        <div>
+                            <i class="pi pi-tags text-gray-500"></i>
+                            <span>Category</span>
+                        </div>
+                        
+                        @if (categoryCocktailsModalPageFacade.selectedCocktailsCategory()) {
+                            <div>
+                                <i class="pi pi-spin pi-spinner category-spinner"></i>
+                            </div>
+                        }
+                    </div>
+
             </th>
             <th class="text-center py-4 px-6 font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700">
                 <div class="flex items-center justify-center gap-2">
